@@ -1,0 +1,6 @@
+[submodule "public"]
+	path = public
+	url = https://github.com/TAVE-WEBSITE/TAVE-ASSETS.git
+[submodule "src/components"]
+	path = src/components
+	url = https://github.com/TAVE-WEBSITE/TAVE-UI-COMPONENTS.git
