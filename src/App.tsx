@@ -10,13 +10,15 @@ function App() {
     <BrowserRouter>
       <div className="h-screen bg-[#121826]">
         <Header />
-        <Routes>
-          <Route path="/" element={<></>} />
-          <Route path="/dashboard" element={<DashBoard />} />
-          <Route path="/applies" element={<ApplyList />} />
-          <Route path="/setting" element={<Setting />} />
-          <Route path="/evaluation" element={<Evaluation />} />
-        </Routes>
+        <main className="h-[calc(100vh-112px)]">
+          <Routes>
+            <Route path="/" element={<></>} />
+            <Route path="/dashboard" element={<DashBoard />} />
+            <Route path="/applies" element={<ApplyList />} />
+            <Route path="/setting" element={<Setting />} />
+            <Route path="/evaluation" element={<Evaluation />} />
+          </Routes>
+        </main>
       </div>
     </BrowserRouter>
   );
