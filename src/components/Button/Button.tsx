@@ -4,8 +4,6 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   text: string;
   width?: string;
   className?: string;
-  disabled?: boolean;
-  onClick: () => void;
 }
 
 const Button = ({
@@ -19,7 +17,7 @@ const Button = ({
     <button
       className={`px-4 py-3 text-semibold text-white bg-blue-600 rounded-lg cursor-pointer disabled:cursor-not-allowed disabled:bg-gray-400 disabled:text-white font-semibold ${width} ${className}`}
       onClick={onClick}
-      onKeyDown={(e) => e.key === "Enter" && onClick()}
+      onKeyDown={(e) => e.key === "Enter" && onClick}
       disabled={disabled}
     >
       {text}
