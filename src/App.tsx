@@ -6,10 +6,11 @@ import { Page as Evaluation } from "@/pages/Evaluation";
 import Header from "@/components/Header/Header";
 
 function App() {
+  const redirectionList = ["DASHBOARD", "APPLYLIST", "SETTING", "EVALUTION"];
   return (
     <BrowserRouter>
       <div className="h-screen bg-[#121826]">
-        <Header />
+        <Header redirectionList={redirectionList} />
         <main className="h-[calc(100vh-112px)]">
           <Routes>
             <Route path="/" element={<></>} />

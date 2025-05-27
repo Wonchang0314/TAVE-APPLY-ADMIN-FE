@@ -1,13 +1,22 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import Icon from "@/components/Icon/Icon";
 
-const Header = () => {
-  const redirectionList = ["DASHBOARD", "APPLY LIST", "SETTING", "EVALUATION"];
+type HeaderProps = {
+  redirectionList: string[];
+};
+const Header = ({ redirectionList }: HeaderProps) => {
+  const [isLogoutOpen, setIsLogoutOpen] = useState(false);
+
+  // const [openMenu, setOpenMenu] = useState<"SETTING" | "EVALUTION" | null>(
+  //   null
+  // );
+  // const handleMouseEnter = (menu: "SETTING" | "EVALUTION") => setOpenMenu(menu);
+  // const handleMouseLeave = () => setOpenMenu(null);
+  // const handleClick = () => setOpenMenu(null); // 클릭 시 닫기
 
   return (
-    <header
-      className="bg-gradient-to-b from-gray-900 from-30% to-transparent text-white"
-    >
+    <header className="bg-gradient-to-b from-gray-900 from-30% to-transparent text-white">
       <div className="flex items-center justify-between z-50 px-16 py-8">
         <Link to="/" className="z-50">
           <Icon type="TaveLogo" width={100} height={40} />
@@ -17,7 +26,7 @@ const Header = () => {
             {redirectionList.map((item, index) => (
               <li
                 key={index}
-                className="hover:bg-gray-800 px-4 py-3 rounded-xl text-gray-400 hover:text-white"
+                className="group hover:bg-gray-800 px-4 py-3 rounded-xl text-gray-400 hover:text-white relative"
               >
                 <Link
                   to={`/${
@@ -27,16 +36,52 @@ const Header = () => {
                 >
                   {item}
                 </Link>
+                {item === "SETTING" && (
+                  <ul className="absolute top-14 left-0 w-full bg-gray-800 text-gray-400 px-4 py-3 rounded-xl flex flex-col gap-3 text-center hidden group-hover:flex transition-all duration-200">
+                    <li className="hover:text-white cursor-pointer">
+                      기본 설정
+                    </li>
+                    <li className="hover:text-white cursor-pointer">
+                      서류 설정
+                    </li>
+                    <li className="hover:text-white cursor-pointer">
+                      면접 설정
+                    </li>
+                    <li className="hover:text-white cursor-pointer">
+                      최종 합격
+                    </li>
+                  </ul>
+                )}
+                {/* hover를 유지하기 위한 spacer */}
+                <div className="absolute top-full left-0 w-full h-2" />
+                {item === "EVALUTION" && (
+                  <ul className="absolute top-14 left-0 w-full bg-gray-800 text-gray-400 px-4 py-3 rounded-xl flex flex-col gap-3 text-center hidden group-hover:flex transition-all duration-200">
+                    <li className="hover:text-white cursor-pointer">
+                      서류 평가
+                    </li>
+                    <li className="hover:text-white cursor-pointer">
+                      면접 평가
+                    </li>
+                  </ul>
+                )}
               </li>
             ))}
           </ul>
         </nav>
         <button
-          className="relative z-50 bg-gray-800 py-2 px-4 rounded-[10px] cursor-pointer flex gap-2"
-          onClick={() => {}}
+          className="relative group bg-gray-800 py-2 px-4 rounded-[10px] cursor-pointer flex gap-2"
+          onClick={() => setIsLogoutOpen(!isLogoutOpen)}
         >
           홍길동님
-          <Icon type="ChevronDown" size="S" />
+          <Icon type="ChevronDown" size={24} />
+          <div className="absolute top-full left-0 w-full h-2" />
+          <ul
+            className={`absolute top-12 left-0 w-full bg-gray-800 text-gray-400 px-4 py-3 rounded-xl flex flex-col gap-3 text-center ${
+              isLogoutOpen ? "flex" : "hidden"
+            } transition-all duration-200`}
+          >
+            <li className="hover:text-white cursor-pointer">로그아웃</li>
+          </ul>
         </button>
       </div>
     </header>

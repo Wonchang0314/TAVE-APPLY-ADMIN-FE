@@ -9,7 +9,7 @@ const FlexBox = ({ className, direction = "row", children }: FlexBoxProps) => {
     <div
       className={`flex ${
         direction === "col" ? "flex-col" : "flex-row"
-      } ${className}`}
+      } items-center ${className}`}
     >
       {children}
     </div>
