@@ -12,7 +12,7 @@ const CountCard = ({ text, boxColor, count }: CountCardProps) => {
     <FlexBox className="bg-white rounded-xl px-4 py-5 justify-between w-[420px] border border-gray-200">
       <FlexBox className="gap-2">
         <div
-          className={`w-[5px] h-[21px] rounded-xl ${
+          className={`w-[5px] h-[20px] rounded-xl ${
             boxColor === "blue"
               ? "bg-blue-500"
               : boxColor === "green"
