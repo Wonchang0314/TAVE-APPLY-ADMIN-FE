@@ -2,9 +2,9 @@ name: Build and Deploy
 
 on:
   push:
-    branches: [ develop ]
+    branches: [develop]
   pull_request:
-    branches: [ develop ]
+    branches: [develop]
 
 permissions:
   contents: write
@@ -15,7 +15,33 @@ env:
   NODE_OPTIONS: --max-old-space-size=4096
 
 jobs:
-  build-and-deploy:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "yarn"
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Build project
+        run: yarn build
+        env:
+          CI: true
+
+      - name: Build Storybook
+        run: yarn build-storybook
+        env:
+          CI: true
+
+  deploy:
+    needs: build
+    if: github.event_name == 'push' && github.ref == 'refs/heads/develop'
     runs-on: ubuntu-latest
     environment:
       name: github-pages
@@ -27,16 +53,11 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
-          cache: 'yarn'
+          node-version: "20"
+          cache: "yarn"
 
       - name: Install dependencies
         run: yarn install --frozen-lockfile
-
-      - name: Build project
-        run: yarn build
-        env:
-          CI: true
 
       - name: Build Storybook
         run: yarn build-storybook
