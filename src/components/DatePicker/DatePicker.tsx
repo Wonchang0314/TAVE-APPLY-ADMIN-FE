@@ -29,7 +29,7 @@ export default function DatePicker({
     setValue(e.target.value);
   };
 
-  const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+  const handleBlur = () => {
     if (
       panelRef.current &&
       !panelRef.current.contains(document.activeElement)
