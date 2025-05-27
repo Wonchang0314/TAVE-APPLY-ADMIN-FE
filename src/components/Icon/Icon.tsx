@@ -1,7 +1,8 @@
 import React from "react";
+import type { SVGProps } from "react";
 import * as icons from "@/assets/Icons";
 
-type IconType =
+export type IconType =
   | "TaveLogo"
   | "XSquare"
   | "X"
@@ -65,18 +66,21 @@ type IconType =
   | "AlignJustify"
   | "AlignLeft"
   | "AlignCenter"
-  | "ChevronDown";
+  | "Trash"
+  | "ChevronDown"
+  | "File"
+  | "Pen"
+  | "Filter"
+  | "Dots";
 
-type IconSize = "S" | "M" | "L";
-
-interface BaseIconProps {
+interface BaseIconProps extends SVGProps<SVGSVGElement> {
   type: IconType;
-  isBlack?: boolean;
+  className?: string;
 }
 
 interface StandardIconProps extends BaseIconProps {
   type: Exclude<IconType, "TaveLogo">;
-  size?: IconSize;
+  size: number;
 }
 
 interface TaveLogoIconProps extends BaseIconProps {
@@ -87,14 +91,11 @@ interface TaveLogoIconProps extends BaseIconProps {
 
 type IconProps = StandardIconProps | TaveLogoIconProps;
 
-const sizeMap = {
-  S: "24px",
-  M: "40px",
-  L: "64px",
-};
-
-export const Icon: React.FC<IconProps> = (props) => {
-  const { type, isBlack = false } = props;
+export const Icon: React.FC<IconProps> = ({
+  type,
+  className = "",
+  ...props
+}) => {
   const IconComponent = icons[type];
 
   if (!IconComponent) {
@@ -105,23 +106,21 @@ export const Icon: React.FC<IconProps> = (props) => {
     const { width, height } = props as TaveLogoIconProps;
     return (
       <IconComponent
-        style={{
-          width: `${width}px`,
-          height: `${height}px`,
-          stroke: isBlack ? "#121212" : undefined,
-        }}
+        width={width}
+        height={height}
+        className={className}
+        {...props}
       />
     );
   }
 
-  const { size = "M" } = props as StandardIconProps;
+  const { size } = props as StandardIconProps;
   return (
     <IconComponent
-      style={{
-        width: sizeMap[size],
-        height: sizeMap[size],
-        stroke: isBlack ? "#121212" : undefined,
-      }}
+      width={size}
+      height={size}
+      className={className}
+      {...props}
     />
   );
 };
