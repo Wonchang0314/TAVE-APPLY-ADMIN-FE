@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
 import Pagination from '../Pagination/Pagination';
 
-const ApplicationTable = () => {
+interface ApplicationTableProps {
+  filterStatus?: '전체' | '대기중' | '완료';
+}
+
+const ApplicationTable = ({ filterStatus = '전체' }: ApplicationTableProps) => {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 7;
 
@@ -161,21 +165,29 @@ const ApplicationTable = () => {
     }
   };
 
+  const getGenderText = (gender: string) => {
+    return gender === 'MALE' ? '남' : '여';
+  };
+
+  // 필터링된 데이터 생성
+  const filteredData = mockData.filter((item) => {
+    if (filterStatus === '전체') return true;
+    if (filterStatus === '완료') return item.isEvaluated;
+    if (filterStatus === '대기중') return !item.isEvaluated;
+    return true;
+  });
+
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = mockData.slice(indexOfFirstItem, indexOfLastItem);
-  const totalPages = Math.ceil(mockData.length / itemsPerPage);
+  const currentItems = filteredData.slice(indexOfFirstItem, indexOfLastItem);
+  const totalPages = Math.ceil(filteredData.length / itemsPerPage);
 
   const handlePageChange = (pageNumber: number): void => {
     setCurrentPage(pageNumber);
   };
 
-  const getGenderText = (gender: string) => {
-    return gender === 'MALE' ? '남' : '여';
-  };
-
   return (
-    <div className="w-full overflow-x-auto mt-10 px-20">
+    <div className="w-full overflow-x-auto px-20">
       <div className="max-w-8xl mx-auto">
       <div className="bg-white rounded-2xl border border-gray-200 overflow-hidden">
   <table className="w-full border-separate border-spacing-0">

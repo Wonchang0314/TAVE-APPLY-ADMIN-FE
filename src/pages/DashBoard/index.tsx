@@ -1,8 +1,24 @@
 import { useState } from "react";
 import FlexBox from "@/components/Layout/FlexBox";
 import CountCard from "@/components/CountCard";
+import DonutChart from "@/components/Chart/DonutChart";
 import Modal from "@/components/Modal/Modal";
-import ApplicationTable from "@/components/ApplicationTable/ApplicationTable";
+import type { ChartData, ChartDataWithCount } from "@/types/chart";
+
+// 차트 샘플 데이터
+const genderData: ChartDataWithCount[] = [
+  { label: "남성", ratio: 75, count: 34 },
+  { label: "여성", ratio: 25, count: 11 },
+];
+
+const skillData: ChartData[] = [
+  { label: "프론트", ratio: 35 },
+  { label: "백엔드", ratio: 25 },
+  { label: "디자인", ratio: 20 },
+  { label: "데브옵스", ratio: 13 },
+  { label: "AI", ratio: 7 },
+];
+
 export const Page = () => {
   const [isOpen, setIsOpen] = useState(true);
   return (
@@ -15,13 +31,29 @@ export const Page = () => {
         </FlexBox>
       </FlexBox>
 
-      <section className="min-h-[calc(100vh-244px)] bg-gray-100">
+      <section className="min-h-[calc(100vh-244px)] bg-gray-100 flex flex-col gap-8">
         <FlexBox className="w-full pt-8 justify-center gap-4">
           <CountCard text="현재 지원자수" boxColor="blue" count={200} />
           <CountCard text="전 기수 대비" boxColor="green" count="+10%" />
           <CountCard text="현재 지원자수" boxColor="orange" count={100} />
         </FlexBox>
-        <ApplicationTable />
+
+        <FlexBox className="justify-center gap-4">
+          <div className="bg-white rounded-xl px-4 py-5 justify-between w-[640px] border border-gray-200">
+            <DonutChart
+              data={genderData}
+              title="남녀 비율"
+              colors={["#4F46E5", "#EC4899"]}
+            />
+          </div>
+          <div className="bg-white rounded-xl px-4 py-5 justify-between w-[640px] border border-gray-200">
+            <DonutChart
+              data={skillData}
+              title="파트별 비율"
+              colors={["#4F46E5", "#EC4899", "#F97316", "#EAB308", "#10B981"]}
+            />
+          </div>
+        </FlexBox>
         <Modal
           isOpen={isOpen}
           title="신규 지원 초기 설정"
