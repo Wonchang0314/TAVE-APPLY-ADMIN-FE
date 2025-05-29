@@ -39,10 +39,10 @@ export const Page = () => {
           <CountCard text="현재 지원자수" boxColor="orange" count={100} />
         </FlexBox>
         <div className="px-16 flex justify-between items-center">
-          <Tab 
+        <Tab 
             categories={categories}
             active={activeTab}
-            onChange={setActiveTab}
+            onChange={() => setActiveTab(activeTab)}
             className="text-white"
           />
           <div className="w-1/4">
