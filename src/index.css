@@ -5,3 +5,13 @@
   padding: 0;
   box-sizing: border-box;
 }
+
+input:focus,
+textarea:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.gray-placeholder::placeholder {
+  color: rgba(57, 65, 80, 0.37);
+}
