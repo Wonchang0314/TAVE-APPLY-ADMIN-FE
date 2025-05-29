@@ -7,6 +7,7 @@ import Header from "@/components/Header/Header";
 
 function App() {
   const redirectionList = ["DASHBOARD", "APPLYLIST", "SETTING", "EVALUTION"];
+
   return (
     <BrowserRouter>
       <div className="h-screen bg-[#121826]">

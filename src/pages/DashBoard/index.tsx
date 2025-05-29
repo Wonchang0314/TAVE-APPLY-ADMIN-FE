@@ -1,15 +1,16 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import FlexBox from "@/components/Layout/FlexBox";
-import CountCard from "@/components/CountCard";
+import CountCard from "@/components/Card/CountCard";
 import DonutChart from "@/components/Chart/DonutChart";
 import Modal from "@/components/Modal/Modal";
 import type { ChartData, ChartDataWithCount } from "@/types/chart";
+import { fetchChartData } from "@/api/DashBoard/fetchChartData";
 
 // 차트 샘플 데이터
-const genderData: ChartDataWithCount[] = [
-  { label: "남성", ratio: 75, count: 34 },
-  { label: "여성", ratio: 25, count: 11 },
-];
+// const genderData: ChartDataWithCount[] = [
+//   { label: "남성", ratio: 75, count: 34 },
+//   { label: "여성", ratio: 25, count: 11 },
+// ];
 
 const skillData: ChartData[] = [
   { label: "프론트", ratio: 35 },
@@ -21,6 +22,16 @@ const skillData: ChartData[] = [
 
 export const Page = () => {
   const [isOpen, setIsOpen] = useState(true);
+  const [genderData, setGenderDate] = useState<ChartDataWithCount[]>([]);
+
+  useEffect(() => {
+    const fetcher = async () => {
+      const data = await fetchChartData("gender");
+      setGenderDate(data);
+    };
+    fetcher();
+  }, []);
+
   return (
     <div className="text-white">
       <FlexBox className="gap-8 px-16 pb-8 items-start" direction="col">

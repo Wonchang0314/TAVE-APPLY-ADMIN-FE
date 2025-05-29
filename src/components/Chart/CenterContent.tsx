@@ -21,8 +21,6 @@ const CenterContent = ({ data, selectedSegment }: CenterContentProps<any>) => {
     );
   }
 
-  console.log(data);
-
   return (
     <div className="text-center">
       <div className="text-gray-500 text-sm mb-1">전체</div>
