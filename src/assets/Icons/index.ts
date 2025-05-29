@@ -67,3 +67,4 @@ export { default as Dots } from "./tabler_dots.svg?react";
 export { default as File } from "./tabler_file.svg?react";
 export { default as Pen } from "./Pen.svg?react";
 export { default as Filter } from "./tabler_filter.svg?react";
+export { default as ChevronUp } from "./chevron-up.svg?react";
