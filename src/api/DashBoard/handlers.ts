@@ -1,4 +1,4 @@
-import { http, HttpResponse } from "msw";
+import { http, HttpResponse, delay } from "msw";
 import type { ChartData, ChartDataWithCount } from "@/types/chart";
 
 const genderData: ChartDataWithCount[] = [
@@ -15,19 +15,20 @@ const skillData: ChartData[] = [
 ];
 
 export const handlers = [
-  http.get("/api/chart-data", ({ request }) => {
+  http.get("/api/chart-data", async ({ request }) => {
     // URL에서 type 파라미터 추출
     const url = new URL(request.url);
     const type = url.searchParams.get("type");
 
-    // 10% 확률로 에러 발생
-    if (Math.random() < 0.1) {
-      return new HttpResponse(null, {
-        status: 500,
-        statusText: "Internal Server Error",
-      });
-    }
+    // // 10% 확률로 에러 발생
+    // if (Math.random() < 0.1) {
+    //   return new HttpResponse(null, {
+    //     status: 500,
+    //     statusText: "Internal Server Error",
+    //   });
+    // }
 
+    await delay(1000);
     // type에 따라 데이터 반환
     switch (type) {
       case "gender":

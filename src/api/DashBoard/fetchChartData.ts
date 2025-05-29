@@ -1,13 +1,15 @@
-const fetchChartData = async (type: string) => {
+import { axiosInstance } from "@/api/axiosInstance";
+import type { ChartData, ChartDataWithCount } from "@/types/chart";
+
+const fetchChartData = async (
+  type: string
+): Promise<ChartData[] | ChartDataWithCount[]> => {
   try {
-    const res = await fetch(`/api/chart-data?type=${type}`);
-    if (!res.ok) {
-      throw new Error(`response status: ${res.status}`);
-    }
-    const data = await res.json();
-    return data;
+    const res = await axiosInstance.get(`/api/chart-data?type=${type}`);
+    return res.data;
   } catch (error) {
     console.error(`Failed to fetch chart data`, error);
+    throw error;
   }
 };
 
