@@ -2,7 +2,7 @@ import { useState } from "react";
 import FlexBox from "@/components/Layout/FlexBox";
 import CountCard from "@/components/CountCard";
 import Modal from "@/components/Modal/Modal";
-
+import ApplicationTable from "@/components/ApplicationTable/ApplicationTable";
 export const Page = () => {
   const [isOpen, setIsOpen] = useState(true);
   return (
@@ -21,6 +21,7 @@ export const Page = () => {
           <CountCard text="전 기수 대비" boxColor="green" count="+10%" />
           <CountCard text="현재 지원자수" boxColor="orange" count={100} />
         </FlexBox>
+        <ApplicationTable />
         <Modal
           isOpen={isOpen}
           title="신규 지원 초기 설정"
