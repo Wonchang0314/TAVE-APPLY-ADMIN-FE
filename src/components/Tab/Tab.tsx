@@ -29,7 +29,7 @@ const Tab = ({
             ${current === text ? "text-[#255FF4]" : "text-[#6C727F]"}
             ${centerType && "px-26"}
           `}
-          onClick={() => onChange(text)}
+          onClick={onChange}
         >
           {text}
           {current === text && (
