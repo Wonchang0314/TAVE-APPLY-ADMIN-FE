@@ -5,14 +5,14 @@ import Tab from "@/components/Tab/Tab";
 import ApplicationTable from "@/components/ApplicationTable/ApplicationTable";
 import SearchInput from "@/components/Input/SearchInput";
 
-interface InputProps {
-  categories: string[];
-  active?: string;
-  onChange: (value: "전체" | "대기중" | "완료") => void; 
-  className?: string;
-  fitWidth?: boolean;
-  centerType?: boolean;
-}
+// interface InputProps {
+//   categories: string[];
+//   active?: string;
+//   onChange: (value: "전체" | "대기중" | "완료") => void; 
+//   className?: string;
+//   fitWidth?: boolean;
+//   centerType?: boolean;
+// }
 
 export const Page = () => {
   const [activeTab, setActiveTab] = useState<"전체" | "대기중" | "완료">("전체");
