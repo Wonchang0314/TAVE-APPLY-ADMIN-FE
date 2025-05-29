@@ -1,4 +1,4 @@
-import FlexBox from "./Layout/FlexBox";
+import FlexBox from "../Layout/FlexBox";
 
 interface CountCardProps {
   text: string;

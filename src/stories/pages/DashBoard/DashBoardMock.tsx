@@ -1,17 +1,56 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import FlexBox from "@/components/Layout/FlexBox";
 import CountCard from "@/components/Card/CountCard";
 import DonutChart from "@/components/Chart/DonutChart";
 import Modal from "@/components/Modal/Modal";
 import SkeletonDonutChart from "@/components/Chart/SkeletonUI/SkeletonDonutChart";
-import { useDashBoard } from "@/hooks/DashBoard/useDashBoard";
+import type { ChartData, ChartDataWithCount } from "@/types/chart";
 
-export const Page = () => {
+// 더미 데이터
+const mockGenderData: ChartDataWithCount[] = [
+  { label: "남성", ratio: 65, count: 45 },
+  { label: "여성", ratio: 35, count: 25 },
+];
+
+const mockSkillData: ChartData[] = [
+  { label: "프론트엔드", ratio: 40 },
+  { label: "백엔드", ratio: 30 },
+  { label: "디자인", ratio: 15 },
+  { label: "데브옵스", ratio: 10 },
+  { label: "AI/ML", ratio: 5 },
+];
+
+// 가짜 useDashBoard 훅
+const useDashBoardMock = () => {
+  const [isLoading, setIsLoading] = useState(true);
+
+  // 컴포넌트 마운트 시 로딩 상태 시뮬레이션
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 1500);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  return {
+    genderQuery: {
+      data: mockGenderData,
+      isLoading,
+    },
+    skillQuery: {
+      data: mockSkillData,
+      isLoading,
+    },
+  };
+};
+
+export const DashBoardMock = () => {
   const [isOpen, setIsOpen] = useState(false);
   const {
     genderQuery: { data: genderData, isLoading: isGenderLoading },
     skillQuery: { data: skillData, isLoading: isSkillLoading },
-  } = useDashBoard();
+  } = useDashBoardMock();
 
   return (
     <div className="text-white">

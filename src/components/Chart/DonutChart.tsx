@@ -9,7 +9,8 @@ export interface DonutChartProps<T> {
   data: T[];
   colors: string[];
 }
-const DonutChart = ({ title, data, colors }: DonutChartProps<any>) => {
+
+const DonutChart = ({ title, data = [], colors }: DonutChartProps<any>) => {
   const [selectedSegment, setSelectedSegment] = useState(null);
 
   const handleSegmentClick = (index: any) => {
@@ -75,20 +76,23 @@ const DonutChart = ({ title, data, colors }: DonutChartProps<any>) => {
   return (
     <FlexBox direction="col" className="py-4">
       <h1 className="text-lg font-bold text-gray-800">{title}</h1>
+
       <FlexBox direction="col">
         {/* 도넛 차트 */}
-        <FlexBox className="relative justify-center">
-          <svg width="400" height="400" style={{ display: "block" }}>
-            {renderChart()}
-          </svg>
-          {/* 차트 가운데 컨텐츠 */}
-          <FlexBox className="absolute inset-0 justify-center">
-            {isChartDataWithCount(data[0]) &&
-              CenterContent({ data, selectedSegment })}
-          </FlexBox>
+        <FlexBox className="relative justify-center mb-6">
+          <>
+            <svg width="400" height="400" style={{ display: "block" }}>
+              {renderChart()}
+            </svg>
+            {/* 차트 가운데 컨텐츠 */}
+            <FlexBox className="absolute inset-0 justify-center">
+              {data[0] &&
+                isChartDataWithCount(data[0]) &&
+                CenterContent({ data, selectedSegment })}
+            </FlexBox>
+          </>
         </FlexBox>
 
-        {/* 파트별 섹션 (클릭하여 비율 확인) */}
         <FlexBox className="gap-2">
           {data.map((item, index) => (
             <button

@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import DonutChart from "./DonutChart";
+import DonutChart from "@/components/Chart/DonutChart";
 import type { ChartData, ChartDataWithCount } from "@/types/chart";
 
 const meta = {
@@ -41,4 +41,4 @@ export const SkillRatio: Story = {
     title: "파트별 비율",
     colors: ["#4F46E5", "#EC4899", "#F97316", "#EAB308", "#10B981"],
   },
-}; 
+};
