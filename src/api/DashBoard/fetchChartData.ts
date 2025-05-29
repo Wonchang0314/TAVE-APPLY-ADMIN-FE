@@ -1,9 +1,6 @@
 import { axiosInstance } from "@/api/axiosInstance";
-import type { ChartData, ChartDataWithCount } from "@/types/chart";
 
-const fetchChartData = async (
-  type: string
-): Promise<ChartData[] | ChartDataWithCount[]> => {
+const fetchChartData = async (type: string) => {
   try {
     const res = await axiosInstance.get(`/api/chart-data?type=${type}`);
     return res.data;

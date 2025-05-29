@@ -1,6 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import Modal from "@/components/Modal/Modal";
-import { useState } from "react";
+import { useRef } from "react";
+
+type ModalProps = React.ComponentProps<typeof Modal>;
+type StoryModalProps = Omit<ModalProps, "dialogRef">;
 
 const meta = {
   title: "Components/Modal",
@@ -12,50 +15,32 @@ const meta = {
 } satisfies Meta<typeof Modal>;
 
 export default meta;
-type Story = StoryObj<typeof meta>;
-
-const ModalExample = () => {
-  const [isOpen, setIsOpen] = useState(false);
-
-  return (
-    <div>
-      <button
-        onClick={() => setIsOpen(true)}
-        className="px-4 py-2 bg-blue-600 text-white rounded-lg"
-      >
-        모달 열기
-      </button>
-      <Modal
-        isOpen={isOpen}
-        onClose={() => setIsOpen(false)}
-        title="모달 제목"
-        buttonCount={1}
-        onConfirm={() => {
-          setIsOpen(false);
-        }}
-      >
-        <div className="min-h-[200px] flex items-center justify-center">
-          모달 내용이 들어갈 자리입니다.
-        </div>
-      </Modal>
-    </div>
-  );
-};
+type Story = StoryObj<StoryModalProps>;
 
 export const Default: Story = {
   args: {
-    isOpen: true,
-    onClose: () => {},
-    buttonCount: 2,
-    title: "모달 제목",
+    buttonCount: 1,
     children: (
       <div className="min-h-[200px] flex items-center justify-center">
         모달 내용이 들어갈 자리입니다.
       </div>
     ),
+    title: "모달 제목",
     confirmText: "확인",
-    onConfirm: () => alert("확인 버튼 클릭!"),
     cancelText: "취소",
   },
-  render: () => ModalExample(),
+  render: (args) => {
+    const dialogRef = useRef<HTMLDialogElement>(null);
+    return (
+      <div>
+        <button
+          onClick={() => dialogRef.current?.showModal()}
+          className="px-4 py-2 bg-blue-600 text-white rounded-lg"
+        >
+          모달 열기
+        </button>
+        <Modal {...args} dialogRef={dialogRef} />
+      </div>
+    );
+  },
 };

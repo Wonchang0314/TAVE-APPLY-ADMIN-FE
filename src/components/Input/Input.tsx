@@ -3,16 +3,14 @@ interface InputProps {
   defaultValue?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   placeholder?: string;
-  type?: string;
+  type?: "text" | "password";
   width?: string;
-  //height?: string;
   className?: string;
   disabled?: boolean;
 }
 
 const Input = ({
   value,
-  defaultValue,
   onChange,
   placeholder,
   type = "text",
@@ -24,11 +22,12 @@ const Input = ({
     <input
       type={type}
       value={value}
-      defaultValue={defaultValue}
       onChange={onChange}
       placeholder={placeholder}
       disabled={disabled}
-      className={`px-4 py-5 text-base text-black leading-[135%] tracking-[-0.56px] gray-placeholder bg-white border border-[#E5E7EB] rounded-lg ${width} ${className}`}
+      className={`px-3 py-4 text-base text-black leading-[135%] tracking-[-0.56px] focus:border-black bg-white border border-gray-400 rounded-lg ${
+        disabled ? "opacity-50 cursor-not-allowed" : ""
+      } ${width} ${className}`}
     />
   );
 };

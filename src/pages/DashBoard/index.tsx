@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef } from "react";
 import FlexBox from "@/components/Layout/FlexBox";
 import CountCard from "@/components/Card/CountCard";
 import DonutChart from "@/components/Chart/DonutChart";
@@ -7,11 +7,16 @@ import SkeletonDonutChart from "@/components/Chart/SkeletonUI/SkeletonDonutChart
 import { useDashBoard } from "@/hooks/DashBoard/useDashBoard";
 
 export const Page = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const dialogRef = useRef<HTMLDialogElement>(null);
   const {
     genderQuery: { data: genderData, isLoading: isGenderLoading },
     skillQuery: { data: skillData, isLoading: isSkillLoading },
   } = useDashBoard();
+
+  const calculateSum = () => {
+    if (genderData) return genderData.reduce((a, b) => a + b.count, 0);
+    return 0;
+  };
 
   return (
     <div className="text-white">
@@ -25,9 +30,25 @@ export const Page = () => {
 
       <section className="min-h-[calc(100vh-244px)] bg-gray-100 flex flex-col gap-8">
         <FlexBox className="w-full pt-8 justify-center gap-4">
-          <CountCard text="현재 지원자수" boxColor="blue" count={200} />
-          <CountCard text="전 기수 대비" boxColor="green" count="+10%" />
-          <CountCard text="현재 지원자수" boxColor="orange" count={100} />
+          {isGenderLoading ? (
+            <CountCard text="현재 지원자수" boxColor="blue" count={"-"} />
+          ) : (
+            <CountCard
+              text="현재 지원자수"
+              boxColor="blue"
+              count={calculateSum()}
+            />
+          )}
+          {isGenderLoading ? (
+            <CountCard text="전 기수 대비" boxColor="green" count="-" />
+          ) : (
+            <CountCard text="전 기수 대비" boxColor="green" count="+10%" />
+          )}
+          {isGenderLoading ? (
+            <CountCard text="임시 저장 수" boxColor="orange" count="-" />
+          ) : (
+            <CountCard text="임시 저장 수" boxColor="orange" count={100} />
+          )}
         </FlexBox>
 
         <FlexBox className="justify-center gap-4">
@@ -65,12 +86,10 @@ export const Page = () => {
           </div>
         </FlexBox>
         <Modal
-          isOpen={isOpen}
+          dialogRef={dialogRef}
           title="신규 지원 초기 설정"
-          onClose={() => setIsOpen(!isOpen)}
           buttonCount={1}
           confirmText="설정하러 가기"
-          onConfirm={() => setIsOpen(!isOpen)}
         >
           <p className="text-center text-gray-500">
             안녕하세요, 홍길동 회장님! <br /> 기수 지원 관리 페이지에 오신 것을

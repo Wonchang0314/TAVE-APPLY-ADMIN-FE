@@ -9,6 +9,8 @@ const meta = {
     backgrounds: {
       default: "dark",
     },
+    controls: { disable: true },
+    actions: { disable: true },
   },
   decorators: [
     (Story) => (

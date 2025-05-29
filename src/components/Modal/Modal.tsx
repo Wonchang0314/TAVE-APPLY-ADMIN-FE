@@ -1,12 +1,10 @@
-import { type ReactNode } from "react";
-import { createPortal } from "react-dom";
+import { type ReactNode, useEffect, type DialogHTMLAttributes } from "react";
 import { Icon } from "@/components/Icon/Icon";
 import Button from "@/components/Button/Button";
 
 /** children으로 본문에 해당하는 내용 받아오기 */
-interface ModalProps {
-  isOpen: boolean;
-  onClose: () => void;
+interface ModalProps extends DialogHTMLAttributes<HTMLDialogElement> {
+  dialogRef: React.RefObject<HTMLDialogElement | null>;
   buttonCount: 1 | 2;
   title?: string;
   children: ReactNode;
@@ -14,11 +12,11 @@ interface ModalProps {
   onConfirm?: () => void;
   cancelText?: string;
   width?: string;
+  defaultOpen?: boolean;
 }
 
 const Modal = ({
-  isOpen,
-  onClose,
+  dialogRef,
   buttonCount,
   title,
   children,
@@ -26,61 +24,122 @@ const Modal = ({
   onConfirm,
   cancelText = "취소",
   width = "w-[480px]",
+  defaultOpen = false,
 }: ModalProps) => {
-  if (!isOpen) return null;
+  useEffect(() => {
+    const dialog = dialogRef.current;
+    if (!dialog) return;
 
-  return createPortal(
-    <div className="fixed inset-0 z-50">
-      <div className="absolute inset-0 bg-black opacity-50" onClick={onClose} />
+    // ESC 키 이벤트 처리
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        dialog.close();
+      }
+    };
 
-      {/* Modal Content */}
-      <div className="absolute inset-0 flex items-center justify-center">
-        <div
-          className={`${width} bg-white rounded-2xl shadow-lg transform transition-all`}
+    // dialog가 닫힐 때 onClose 호출
+    const handleClose = () => {
+      if (!dialog.open) {
+        document.body.style.overflow = "unset";
+        dialog.close();
+      }
+    };
+
+    dialog.addEventListener("close", handleClose);
+    dialog.addEventListener("keydown", handleKeyDown);
+
+    // 초기 상태 설정
+    if (defaultOpen) {
+      dialog.showModal();
+      document.body.style.overflow = "hidden";
+    }
+
+    return () => {
+      dialog.removeEventListener("close", handleClose);
+      dialog.removeEventListener("keydown", handleKeyDown);
+      document.body.style.overflow = "unset";
+    };
+  }, []);
+
+  // 배경 클릭 시 닫기
+  const handleBackdropClick = (e: React.MouseEvent) => {
+    const dialogDimensions = dialogRef.current?.getBoundingClientRect();
+    if (!dialogDimensions) return;
+
+    if (
+      e.clientX < dialogDimensions.left ||
+      e.clientX > dialogDimensions.right ||
+      e.clientY < dialogDimensions.top ||
+      e.clientY > dialogDimensions.bottom
+    ) {
+      dialogRef.current?.close();
+    }
+  };
+
+  return (
+    <dialog
+      ref={dialogRef}
+      className={`
+        ${width}
+        fixed
+        top-1/2
+        left-1/2
+        -translate-x-1/2
+        -translate-y-1/2
+        rounded-xl
+        backdrop:bg-black
+        backdrop:opacity-50
+        focus:outline-none
+      `}
+      onClick={handleBackdropClick}
+    >
+      {/* Header */}
+      <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200">
+        <h2 className="text-xl font-semibold text-gray-900">{title}</h2>
+        <button
+          onClick={() => dialogRef.current?.close()}
+          className="p-1 hover:bg-gray-100 rounded-lg transition-colors"
         >
-          {/* Header */}
-          <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200">
-            <h2 className="text-xl font-semibold text-gray-900">{title}</h2>
-            <button
-              onClick={onClose}
-              className="p-1 hover:bg-gray-100 rounded-lg transition-colors"
-            >
-              <Icon type="X" size={24} />
-            </button>
-          </div>
+          <Icon type="X" size={24} />
+        </button>
+      </div>
 
-          {/* Body */}
-          <div className="p-6">{children}</div>
+      {/* Body */}
+      <div className="p-6">{children}</div>
 
-          {/* Footer */}
-          <div className="flex items-center justify-end gap-2 px-6 py-4 border-t border-gray-200">
-            {buttonCount === 1 ? (
+      {/* Footer */}
+      <div className="flex items-center justify-end gap-2 px-6 py-4 border-t border-gray-200">
+        {buttonCount === 1 ? (
+          <Button
+            text={confirmText}
+            onClick={() => dialogRef.current?.close()}
+            className="w-full bg-blue-600 text-white"
+          />
+        ) : (
+          <>
+            <Button
+              text={cancelText}
+              onKeyDown={(e) => e.key === "Enter" && dialogRef.current?.close()}
+              onClick={() => dialogRef.current?.close()}
+              className="bg-gray-200 !text-gray-900 hover:bg-gray-300"
+            />
+            {onConfirm && (
               <Button
                 text={confirmText}
-                onClick={onClose}
-                className="w-full bg-blue-600 text-white"
+                onKeyDown={(e) =>
+                  e.key === "Enter" && dialogRef.current?.close()
+                }
+                onClick={() => {
+                  onConfirm();
+                  dialogRef.current?.close();
+                }}
+                className="hover:bg-blue-700"
               />
-            ) : (
-              <>
-                <Button
-                  text={cancelText}
-                  onClick={onClose}
-                  className="bg-gray-200 !text-gray-900 hover:bg-gray-300"
-                />
-                {onConfirm && (
-                  <Button
-                    text={confirmText}
-                    onClick={onConfirm}
-                    className="hover:bg-blue-700"
-                  />
-                )}
-              </>
             )}
-          </div>
-        </div>
+          </>
+        )}
       </div>
-    </div>,
-    document.body
+    </dialog>
   );
 };
 
