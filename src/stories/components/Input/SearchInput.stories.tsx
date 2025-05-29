@@ -19,25 +19,3 @@ export const Default: Story = {
     width: "w-80",
   },
 };
-
-export const Disabled: Story = {
-  args: {
-    placeholder: "비활성화된 검색",
-    disabled: true,
-    width: "w-80",
-  },
-};
-
-export const WithValue: Story = {
-  args: {
-    value: "검색어",
-    width: "w-80",
-  },
-};
-
-export const CustomWidth: Story = {
-  args: {
-    placeholder: "넓은 검색창",
-    width: "w-[400px]",
-  },
-};

@@ -1,9 +1,9 @@
 import { Search } from "@/assets/Icons";
 import React from "react";
+import Input from "./Input";
 
 interface SearchInputProps {
   value?: string;
-  defaultValue?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   placeholder?: string;
   className?: string;
@@ -13,7 +13,6 @@ interface SearchInputProps {
 
 const SearchInput = ({
   value,
-  defaultValue,
   onChange,
   placeholder,
   className = "",
@@ -21,21 +20,16 @@ const SearchInput = ({
   width = "w-full",
 }: SearchInputProps) => {
   return (
-    <div
-      className={`flex items-center gap-2 py-5 px-4 text-base leading-[135%] tracking-[-0.56px] bg-white border border-[#E5E7EB] rounded-lg ${width} ${
-        disabled ? "opacity-50 cursor-not-allowed" : ""
-      } ${className}`}
-    >
-      <Search className="w-5 h-5 text-[#9DA3AE]" />
-      <input
-        type="text"
+    <div className="relative">
+      <Input
         value={value}
-        defaultValue={defaultValue}
         onChange={onChange}
         placeholder={placeholder}
         disabled={disabled}
-        className="w-full text-black placeholder-gray-400 bg-transparent border-none focus:outline-none"
+        width={width}
+        className={`pl-10 ${className}`}
       />
+      <Search className="absolute top-1/3 left-3 w-5 h-5 text-[#9DA3AE]" />
     </div>
   );
 };
