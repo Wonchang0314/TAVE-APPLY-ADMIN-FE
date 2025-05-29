@@ -1,4 +1,4 @@
-import FlexBox from "../Layout/FlexBox";
+import FlexBox from "@/components/Layout/FlexBox";
 
 const CountCardSkeleton = () => {
   return (

@@ -1,4 +1,4 @@
-import FlexBox from "../../Layout/FlexBox";
+import FlexBox from "@/components/Layout/FlexBox";
 
 // 스켈레톤 버튼들
 const SkeletonButtons = () => (
