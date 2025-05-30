@@ -1,17 +1,17 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import DatePicker from '@/components/DatePicker/DatePicker';
-import { useState } from 'react';
+import type { Meta, StoryObj } from "@storybook/react";
+import DatePicker from "@/components/DatePicker/DatePicker";
+import { useState } from "react";
 
 const meta = {
-  title: 'Components/DatePicker',
+  title: "Components/DatePicker",
   component: DatePicker,
   parameters: {
-    layout: 'centered',
+    layout: "centered",
   },
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   decorators: [
     (Story) => {
-      const [value, setValue] = useState('');
+      const [value, setValue] = useState("");
       return <Story args={{ value, setValue }} />;
     },
   ],
@@ -22,8 +22,13 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    state: 'enable',
-    value: '',
+    state: "enable",
+    value: "",
     setValue: () => {},
+  },
+  render: () => {
+    const [date, setDate] = useState("");
+
+    return <DatePicker value={date} setValue={setDate} />;
   },
 };
