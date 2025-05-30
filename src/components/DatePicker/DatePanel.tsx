@@ -84,7 +84,8 @@ export default function DatePanel({
 
   return (
     <div
-      className="w-full bg-white py-3 px-4 flex flex-col rounded-lg border border-gray-300"
+      className="w-full bg-white py-3 px-4 flex flex-col rounded-lg border border-gray-300 text-black"
+      onClick={(e) => e.stopPropagation()}
     >
       <DatePickerHeader
         onClickLeftIcon={onClickLeftIcon}
@@ -94,17 +95,20 @@ export default function DatePanel({
         setMode={setMode}
       />
       {mode === "date" && (
-        <div className="w-full grid grid-cols-7 text-center">
-          {days.map(day => (
-            <div key={day} className="text-text-primary w-12 h-12 flex items-center justify-center text-sm font-medium">
+        <div className="w-full grid grid-cols-7 text-center text-black">
+          {days.map((day) => (
+            <div
+              key={day}
+              className="text-text-primary w-12 h-12 flex items-center justify-center text-sm font-medium"
+            >
               {day}
             </div>
           ))}
         </div>
       )}
       {mode === "date" && (
-        <div className="w-full grid grid-cols-7">
-          {getCalendarDates(date.year(), date.month() + 1).map(date => (
+        <div className="w-full grid grid-cols-7 text-black">
+          {getCalendarDates(date.year(), date.month() + 1).map((date) => (
             <CalendarCell
               key={date.value}
               cellType="date"
@@ -117,8 +121,8 @@ export default function DatePanel({
         </div>
       )}
       {mode === "month" && (
-        <div className="w-full grid grid-cols-3">
-          {getCalendarMonth().map(month => (
+        <div className="w-full grid grid-cols-3 text-black">
+          {getCalendarMonth().map((month) => (
             <CalendarCell
               key={month}
               date={`${month}월`}
@@ -130,8 +134,8 @@ export default function DatePanel({
         </div>
       )}
       {mode === "year" && (
-        <div className="w-full grid grid-cols-3">
-          {getCalendarYear(date.year()).map(year => (
+        <div className="w-full grid grid-cols-3 text-black">
+          {getCalendarYear(date.year()).map((year) => (
             <CalendarCell
               key={year.value}
               date={`${year.value}년`}

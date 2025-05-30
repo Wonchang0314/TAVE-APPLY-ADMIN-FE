@@ -23,9 +23,7 @@ export default function CalendarCell({
         >
           {date}
           {state === "today" && (
-            <div
-              className={`w-1 h-1 rounded-full absolute bottom-[5px]`}
-            />
+            <div className={`w-1 h-1 rounded-full absolute bottom-[5px]`} />
           )}
         </div>
       ) : (
