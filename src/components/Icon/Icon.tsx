@@ -68,6 +68,7 @@ export type IconType =
   | "AlignCenter"
   | "Trash"
   | "ChevronDown"
+  | "ChevronUp"
   | "File"
   | "Pen"
   | "Filter"

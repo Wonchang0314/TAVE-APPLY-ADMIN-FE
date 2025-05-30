@@ -5,6 +5,8 @@ import DonutChart from "@/components/Chart/DonutChart";
 import Modal from "@/components/Modal/Modal";
 import SkeletonDonutChart from "@/components/Chart/SkeletonUI/SkeletonDonutChart";
 import { useDashBoard } from "@/hooks/DashBoard/useDashBoard";
+import Accordion from "@/components/Accordion/Accordion";
+import TextArea from "@/components/Input/TextArea";
 
 export const Page = () => {
   const dialogRef = useRef<HTMLDialogElement>(null);
@@ -29,6 +31,12 @@ export const Page = () => {
       </FlexBox>
 
       <section className="min-h-[calc(100vh-244px)] bg-gray-100 flex flex-col gap-8">
+        <Accordion
+          title="지원 동기와 TAVE 활동을 통해 얻고 싶은 것을 적어주세요. *"
+          className="w-[560px]"
+        >
+          <TextArea width="w-full" height="h-[200px]" />
+        </Accordion>
         <FlexBox className="w-full pt-8 justify-center gap-4">
           {isGenderLoading ? (
             <CountCard text="현재 지원자수" boxColor="blue" count={"-"} />
