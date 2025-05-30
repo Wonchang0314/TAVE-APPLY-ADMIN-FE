@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import FlexBox from "@/components/Layout/FlexBox";
 import CountCard from "@/components/Card/CountCard";
 import DonutChart from "@/components/Chart/DonutChart";
@@ -17,8 +17,6 @@ export const Page = () => {
     if (genderData) return genderData.reduce((a, b) => a + b.count, 0);
     return 0;
   };
-
-  const [date, setDate] = useState("");
 
   return (
     <div className="text-white">
