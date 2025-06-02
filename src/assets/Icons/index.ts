@@ -13,3 +13,4 @@ export { default as HelperCircle } from "./helper-circle.svg?react";
 export { default as Dots } from "./tabler_dots.svg?react";
 export { default as CheckCircle } from "./circle-check-blue.svg?react";
 export { default as ClockCircle } from "./circle-clock-grey.svg?react";
+export { default as Search } from "./search.svg?react";

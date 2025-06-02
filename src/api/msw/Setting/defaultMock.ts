@@ -2,7 +2,7 @@ import { delay, http, HttpResponse } from "msw";
 import type {
   SettingDefaultResponse,
   SettingDefaultErrorResponse,
-} from "./types";
+} from "@/api/Setting/types";
 
 const BASE_URL = "/v1/admin/apply/setting";
 

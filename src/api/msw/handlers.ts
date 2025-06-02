@@ -1,6 +1,9 @@
 import { http, HttpResponse, delay } from "msw";
 import type { ChartData, ChartDataWithCount } from "@/types/chart";
-import { settingHandler, postSettingDefault } from "@/api/Setting/defaultMock";
+import {
+  settingHandler,
+  postSettingDefault,
+} from "@/api/msw/Setting/defaultMock";
 
 const genderData: ChartDataWithCount[] = [
   { label: "남성", ratio: 75, count: 34 },
