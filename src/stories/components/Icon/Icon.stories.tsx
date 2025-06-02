@@ -42,8 +42,7 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    type: "Search",
+    type: "Trash",
     size: 64,
-    className: "bg-gray-900",
   },
 };
