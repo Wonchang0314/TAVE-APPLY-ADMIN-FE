@@ -1,9 +1,14 @@
-import { Routes, Route, BrowserRouter } from "react-router-dom";
+import { Routes, Route, HashRouter } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { Page as DashBoard } from "@/pages/DashBoard";
 import { Page as ApplyList } from "@/pages/ApplyList";
-import { Page as Setting } from "@/pages/Setting";
+import {
+  DefaultSetting,
+  DocumentSetting,
+  InterviewSetting,
+  FinalPassSetting,
+} from "./pages/Setting";
 import { Page as Evaluation } from "@/pages/Evaluation";
 import Header from "@/components/Header/Header";
 
@@ -13,20 +18,22 @@ function App() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <BrowserRouter>
+      <HashRouter>
         <div className="h-screen bg-[#121826]">
           <Header redirectionList={redirectionList} />
           <main className="h-[calc(100vh-112px)]">
             <Routes>
-              <Route path="/" element={<></>} />
-              <Route path="/dashboard" element={<DashBoard />} />
+              <Route path="/" element={<DashBoard />} />
               <Route path="/applies" element={<ApplyList />} />
-              <Route path="/setting" element={<Setting />} />
+              <Route path="/setting/default" element={<DefaultSetting />} />
+              <Route path="/setting/document" element={<DocumentSetting />} />
+              <Route path="/setting/interview" element={<InterviewSetting />} />
+              <Route path="/setting/finalPass" element={<FinalPassSetting />} />
               <Route path="/evalution" element={<Evaluation />} />
             </Routes>
           </main>
         </div>
-      </BrowserRouter>
+      </HashRouter>
 
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
