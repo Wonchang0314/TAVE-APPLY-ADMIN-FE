@@ -20,7 +20,7 @@ export default function DatePicker({
   setValue,
   className,
 }: CustomDatePickerProps) {
-  const [showPanel, setShowPanel] = useState<boolean>(true);
+  const [showPanel, setShowPanel] = useState<boolean>(false);
 
   const inputRef = useRef<HTMLInputElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);

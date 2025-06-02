@@ -1,11 +1,12 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Icon from "@/components/Icon/Icon";
 
 type HeaderProps = {
   redirectionList: string[];
 };
 const Header = ({ redirectionList }: HeaderProps) => {
+  const navigate = useNavigate();
   const [isLogoutOpen, setIsLogoutOpen] = useState(false);
 
   // const [openMenu, setOpenMenu] = useState<"SETTING" | "EVALUTION" | null>(
@@ -14,6 +15,19 @@ const Header = ({ redirectionList }: HeaderProps) => {
   // const handleMouseEnter = (menu: "SETTING" | "EVALUTION") => setOpenMenu(menu);
   // const handleMouseLeave = () => setOpenMenu(null);
   // const handleClick = () => setOpenMenu(null); // 클릭 시 닫기
+
+  const handleNavigate = (url: string) => {
+    switch (url) {
+      case "APPLY LIST":
+        navigate("applies");
+        break;
+      case "DASHBOARD":
+        navigate("");
+        break;
+      default:
+        return;
+    }
+  };
 
   return (
     <header className="bg-gradient-to-b from-gray-900 from-30% to-transparent text-white">
@@ -28,26 +42,36 @@ const Header = ({ redirectionList }: HeaderProps) => {
                 key={index}
                 className="group hover:bg-gray-800 px-4 py-3 rounded-xl text-gray-400 hover:text-white relative"
               >
-                <Link
-                  to={`/${
-                    item === "APPLY LIST" ? "applies" : item.toLowerCase()
-                  }`}
+                <button
                   className="relative z-50"
+                  onClick={() => handleNavigate(item)}
                 >
                   {item}
-                </Link>
+                </button>
                 {item === "SETTING" && (
                   <ul className="absolute top-14 left-0 w-full bg-gray-800 text-gray-400 px-4 py-3 rounded-xl flex flex-col gap-3 text-center hidden group-hover:flex transition-all duration-200">
-                    <li className="hover:text-white cursor-pointer">
+                    <li
+                      className="hover:text-white cursor-pointer"
+                      onClick={() => navigate("/setting/default")}
+                    >
                       기본 설정
                     </li>
-                    <li className="hover:text-white cursor-pointer">
+                    <li
+                      className="hover:text-white cursor-pointer"
+                      onClick={() => navigate("setting/document")}
+                    >
                       서류 설정
                     </li>
-                    <li className="hover:text-white cursor-pointer">
+                    <li
+                      className="hover:text-white cursor-pointer"
+                      onClick={() => navigate("setting/interview")}
+                    >
                       면접 설정
                     </li>
-                    <li className="hover:text-white cursor-pointer">
+                    <li
+                      className="hover:text-white cursor-pointer"
+                      onClick={() => navigate("setting/final")}
+                    >
                       최종 합격
                     </li>
                   </ul>
