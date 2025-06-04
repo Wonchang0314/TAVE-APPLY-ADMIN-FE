@@ -15,7 +15,7 @@ import Header from "@/components/Header/Header";
 function App() {
   const queryClient = new QueryClient();
   const redirectionList = ["DASHBOARD", "APPLY LIST", "SETTING", "EVALUTION"];
-
+  
   return (
     <QueryClientProvider client={queryClient}>
       <HashRouter>
