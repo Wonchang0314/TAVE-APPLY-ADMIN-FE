@@ -1,8 +1,8 @@
 import { Search } from "@/assets/Icons";
-import React from "react";
+import React, { type InputHTMLAttributes } from "react";
 import Input from "./Input";
 
-interface SearchInputProps {
+interface SearchInputProps extends InputHTMLAttributes<HTMLInputElement> {
   value?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   placeholder?: string;

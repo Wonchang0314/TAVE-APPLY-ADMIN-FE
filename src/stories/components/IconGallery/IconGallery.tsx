@@ -10,13 +10,16 @@ const iconNames: StandardIconType[] = [
   "Filter",
   "Left",
   "CheckCircle",
+  "Upload",
   "X",
   "XCircle",
   "ChevronDown",
   "ChevronUp",
+  "Alert",
   "Arrow",
   "File",
   "HelperCircle",
+  "Plus",
   "ClockCircle",
 ] as const;
 

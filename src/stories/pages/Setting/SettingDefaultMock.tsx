@@ -123,11 +123,12 @@ export const SettingDefaultMock = () => {
         </FlexBox>
         <div className="w-[100px] mx-auto my-12">
           <Button
-            text="저장하기"
             isPending={isPending}
             onClick={handleUpdate}
             className="w-[100px]"
-          />
+          >
+            저장하기
+          </Button>
           <ToastMessage
             message="설정이 저장되었습니다."
             isOpen={isToastOpen}

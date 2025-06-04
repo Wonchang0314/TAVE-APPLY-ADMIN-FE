@@ -42,7 +42,9 @@ export default function Accordion({
         onClick={() => handleToggle()}
         onKeyDown={(e) => e.key === "Space" && handleToggle()}
       >
-        <p className="text-gray-700 font-semibold">{title}</p>
+        <p className="text-gray-700 font-semibold text-balance text-start">
+          {title}
+        </p>
         <Icon
           type="ChevronUp"
           size={24}

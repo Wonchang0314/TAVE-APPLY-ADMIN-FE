@@ -6,16 +6,17 @@ import { Page as ApplyList } from "@/pages/ApplyList";
 import {
   DefaultSetting,
   DocumentSetting,
-  InterviewSetting,
   FinalPassSetting,
 } from "./pages/Setting";
+import InterviewSetting from "./pages/Setting/Interview";
+import InterviewSettingDetail from "./pages/Setting/Interview/Detail";
 import { Page as Evaluation } from "@/pages/Evaluation";
 import Header from "@/components/Header/Header";
 
 function App() {
   const queryClient = new QueryClient();
   const redirectionList = ["DASHBOARD", "APPLY LIST", "SETTING", "EVALUTION"];
-  
+
   return (
     <QueryClientProvider client={queryClient}>
       <HashRouter>
@@ -28,6 +29,10 @@ function App() {
               <Route path="/setting/default" element={<DefaultSetting />} />
               <Route path="/setting/document" element={<DocumentSetting />} />
               <Route path="/setting/interview" element={<InterviewSetting />} />
+              <Route
+                path="/setting/interview/:id"
+                element={<InterviewSettingDetail />}
+              />
               <Route path="/setting/finalPass" element={<FinalPassSetting />} />
               <Route path="/evalution" element={<Evaluation />} />
             </Routes>

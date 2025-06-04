@@ -13,6 +13,7 @@ interface ModalProps extends DialogHTMLAttributes<HTMLDialogElement> {
   cancelText?: string;
   width?: string;
   defaultOpen?: boolean;
+  isPending?: boolean;
 }
 
 const Modal = ({
@@ -25,6 +26,7 @@ const Modal = ({
   cancelText = "취소",
   width = "w-[480px]",
   defaultOpen = false,
+  isPending = false,
 }: ModalProps) => {
   useEffect(() => {
     const dialog = dialogRef.current;
@@ -109,32 +111,33 @@ const Modal = ({
 
       {/* Footer */}
       <div className="flex items-center justify-end gap-2 px-6 py-4 border-t border-gray-200">
-        {buttonCount === 1 ? (
+        {buttonCount === 1 && (
           <Button
-            text={confirmText}
             onClick={() => dialogRef.current?.close()}
             className="w-full bg-blue-600 text-white"
-          />
-        ) : (
+          >
+            {confirmText}
+          </Button>
+        )}
+        {buttonCount === 2 && (
           <>
             <Button
-              text={cancelText}
               onKeyDown={(e) => e.key === "Enter" && dialogRef.current?.close()}
               onClick={() => dialogRef.current?.close()}
               className="bg-gray-200 !text-gray-900 hover:bg-gray-300"
-            />
+            >
+              {cancelText}
+            </Button>
             {onConfirm && (
               <Button
-                text={confirmText}
-                onKeyDown={(e) =>
-                  e.key === "Enter" && dialogRef.current?.close()
-                }
+                isPending={isPending}
                 onClick={() => {
                   onConfirm();
-                  dialogRef.current?.close();
                 }}
-                className="hover:bg-blue-700"
-              />
+                className="hover:bg-blue-700 bg-blue-500"
+              >
+                {confirmText}
+              </Button>
             )}
           </>
         )}

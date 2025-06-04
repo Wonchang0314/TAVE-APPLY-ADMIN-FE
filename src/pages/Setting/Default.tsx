@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import Body from "@/components/Layout/Body";
 import FlexBox from "@/components/Layout/FlexBox";
 import LabeledWrapper from "./CustomComponents/LabledInput";
 import IconLabledWrapper from "./CustomComponents/IconLabledDatePicker";
@@ -59,7 +60,7 @@ const DefaultSetting = () => {
         <h2 className="font-semibold text-xl">{nextGeneration}기</h2>
       </FlexBox>
 
-      <section className="min-h-[calc(100vh-244px)] bg-gray-100 flex flex-col">
+      <Body>
         <FlexBox
           direction="col"
           className="gap-4 justify-center w-2xl mx-auto pt-8 gap-8"
@@ -143,12 +144,13 @@ const DefaultSetting = () => {
         </FlexBox>
         <div className="w-[100px] mx-auto my-12">
           <Button
-            text={"저장하기"}
             isPending={isPending}
-            onClick={handleUpdate}
             disabled={isPending}
             className="w-[100px]"
-          />
+            onClick={handleUpdate}
+          >
+            저장하기
+          </Button>
           <ToastMessage
             message={mutationData ? mutationData.message : ""}
             isOpen={isToastOpen}
@@ -156,7 +158,7 @@ const DefaultSetting = () => {
             setIsOpen={setIsToastOpen}
           />
         </div>
-      </section>
+      </Body>
     </div>
   );
 };

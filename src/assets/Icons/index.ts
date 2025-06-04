@@ -14,3 +14,6 @@ export { default as Dots } from "./tabler_dots.svg?react";
 export { default as CheckCircle } from "./circle-check-blue.svg?react";
 export { default as ClockCircle } from "./circle-clock-grey.svg?react";
 export { default as Search } from "./search.svg?react";
+export { default as Plus } from "./tabler_plus.svg?react";
+export { default as Alert } from "./tabler_alert-triangle.svg?react";
+export { default as Upload } from "./tabler_arrow-bar-to-down.svg?react";

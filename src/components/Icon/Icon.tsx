@@ -11,11 +11,14 @@ export type IconType =
   | "Left"
   | "Calendar"
   | "Arrow"
+  | "Alert"
   | "Trash"
   | "File"
   | "Filter"
   | "HelperCircle"
   | "Dots"
+  | "Plus"
+  | "Upload"
   | "CheckCircle"
   | "ClockCircle";
 
