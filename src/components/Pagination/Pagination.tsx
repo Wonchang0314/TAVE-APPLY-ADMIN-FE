@@ -1,6 +1,4 @@
-import React from "react";
-import ArrowLeft from "../../assets/icons/arrow-left.svg";
-import ArrowRight from "../../assets/Icons/arrow-right.svg";
+import Icon from "@/components/Icon/Icon";
 
 interface PaginationProps {
   currentPage: number;
@@ -24,7 +22,7 @@ const Pagination: React.FC<PaginationProps> = ({
         }`}
         aria-label="이전 페이지"
       >
-        <img src={ArrowLeft} alt="이전" className="w-6 h-6" />
+        <Icon type="ChevronUp" size={20} className="rotate-270" />
       </button>
 
       {/* 페이지 번호 */}
@@ -50,7 +48,7 @@ const Pagination: React.FC<PaginationProps> = ({
         }`}
         aria-label="다음 페이지"
       >
-        <img src={ArrowRight} alt="다음" className="w-6 h-6" />
+        <Icon type="ChevronUp" size={20} className="rotate-90" />
       </button>
     </div>
   );
