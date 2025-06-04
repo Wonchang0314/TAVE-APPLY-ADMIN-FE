@@ -1,22 +1,21 @@
-interface InputProps {
+import type { InputHTMLAttributes } from "react";
+
+interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   value?: string;
   defaultValue?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   placeholder?: string;
-  type?: string;
   width?: string;
-  //height?: string;
   className?: string;
   disabled?: boolean;
 }
 
 const Input = ({
   value,
-  defaultValue,
   onChange,
   placeholder,
-  type = "text",
   width,
+  type = "text",
   className,
   disabled = false,
 }: InputProps) => {
@@ -24,11 +23,12 @@ const Input = ({
     <input
       type={type}
       value={value}
-      defaultValue={defaultValue}
       onChange={onChange}
       placeholder={placeholder}
       disabled={disabled}
-      className={`px-4 py-5 text-base text-black leading-[135%] tracking-[-0.56px] gray-placeholder bg-white border border-[#E5E7EB] rounded-lg ${width} ${className}`}
+      className={`px-4 py-3 text-base text-black leading-[135%] tracking-[-0.56px] focus:border-black bg-white border border-gray-300 rounded-lg ${
+        disabled ? "opacity-50 cursor-not-allowed" : ""
+      } ${width} ${className}`}
     />
   );
 };

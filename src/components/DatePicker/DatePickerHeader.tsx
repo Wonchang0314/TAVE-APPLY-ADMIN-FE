@@ -19,8 +19,15 @@ export default function DatePickerHeader({
   mode,
   setMode,
 }: DatePickerHeaderProps) {
-  const onClickMonth = () => setMode("month");
-  const onClickYear = () => setMode("year");
+  const onClickMonth = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setMode("month");
+  };
+
+  const onClickYear = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setMode("year");
+  };
 
   const returnYearText = () => {
     const yearString = date.year().toString();
@@ -32,27 +39,22 @@ export default function DatePickerHeader({
   return (
     <div className="w-full flex justify-between items-center">
       <div
-        onClick={onClickLeftIcon}
-        className="hover:bg-layer-01-hover p-spacing-04"
+        onClick={(e) => {
+          e.stopPropagation();
+          onClickLeftIcon();
+        }}
+        className="hover:bg-gray-200 p-2 rounded-lg"
       >
-        <Icon
-          type="Left"
-          size={24}
-          className="fill-gray-900"
-        />
+        <Icon type="Left" size={20} />
       </div>
       <div className="flex gap-spacing-01">
         {mode === "year" && (
-          <div
-            className={`text-text-primary cursor-pointer label-04-bold ${mode !== "year" && "hover:text-support-info"}`}
-          >
-            {returnYearText()}
-          </div>
+          <div className={`cursor-pointer`}>{returnYearText()}</div>
         )}
         {(mode === "month" || mode === "date") && (
           <div
             onClick={onClickYear}
-            className="text-text-primary cursor-pointer label-04-bold hover:text-support-info"
+            className="cursor-pointer hover:bg-gray-200 p-1 rounded-lg"
           >
             {date.format("YYYY")}년
           </div>
@@ -60,21 +62,20 @@ export default function DatePickerHeader({
         {mode === "date" && (
           <div
             onClick={onClickMonth}
-            className="text-text-primary cursor-pointer label-04-bold hover:text-support-info"
+            className="cursor-pointer hover:bg-gray-200 p-1 rounded-lg"
           >
             {date.format("MM")}월
           </div>
         )}
       </div>
       <div
-        onClick={onClickRightIcon}
-        className="hover:bg-layer-01-hover p-spacing-04"
+        onClick={(e) => {
+          e.stopPropagation();
+          onClickRightIcon();
+        }}
+        className="hover:bg-gray-200 p-2 rounded-lg"
       >
-        <Icon
-          type="Right"
-          size={24}
-          className="fill-gray-900"
-        />
+        <Icon type="Left" size={20} className="rotate-180" />
       </div>
     </div>
   );

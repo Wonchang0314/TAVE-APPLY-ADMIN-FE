@@ -20,7 +20,7 @@ export default function DatePicker({
   setValue,
   className,
 }: CustomDatePickerProps) {
-  const [showPanel, setShowPanel] = useState<boolean>(true);
+  const [showPanel, setShowPanel] = useState<boolean>(false);
 
   const inputRef = useRef<HTMLInputElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
@@ -61,21 +61,17 @@ export default function DatePicker({
   }, []);
 
   return (
-    <div
-      className={`flex flex-col justify-center gap-2 w-[282px] ${className}`}
+    <button
       onClick={() => setShowPanel(!showPanel)}
       onKeyDown={(e) => e.key === "Enter" && setShowPanel(!showPanel)}
+      className={`flex flex-col justify-center gap-2 w-[282px] ${className}`}
     >
       <div className="pl-4 text-sm font-normal text-gray-600">{label}</div>
       <div
-        className={`bg-white cursor-pointer rounded-lg w-full relative ${
-          showPanel ? "rounded-t-lg" : "rounded-lg"
-        }`}
+        className={`bg-white cursor-pointer rounded-lg w-full relative rounded-lg`}
       >
         <div
-          className={`absolute inset-0 pointer-events-none border border-gray-300 rounded-lg ${
-            showPanel ? "rounded-t-lg" : "rounded-lg"
-          }}`}
+          className={`absolute inset-0 pointer-events-none border border-gray-300 rounded-lg`}
         />
         <div className="w-full flex items-center justify-between pr-4">
           <input
@@ -96,7 +92,7 @@ export default function DatePicker({
           <div
             ref={panelRef}
             onMouseDown={handlePanelMouseDown}
-            className="absolute bottom-0 translate-y-full"
+            className="absolute z-999 bottom-0 translate-y-full"
           >
             <DatePanel
               state={state}
@@ -110,6 +106,6 @@ export default function DatePicker({
       <div className={`pl-4 text-sm font-normal text-gray-600`}>
         {description}
       </div>
-    </div>
+    </button>
   );
 }

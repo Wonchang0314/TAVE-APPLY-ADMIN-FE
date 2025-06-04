@@ -1,14 +1,17 @@
 import type { ButtonHTMLAttributes } from "react";
+import LoadingSpinner from "../LoadingSpinner";
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   text: string;
   width?: string;
+  isPending?: boolean;
   className?: string;
 }
 
 const Button = ({
   text,
   width,
+  isPending,
   className,
   disabled = false,
   onClick,
@@ -20,7 +23,7 @@ const Button = ({
       onKeyDown={(e) => e.key === "Enter" && onClick}
       disabled={disabled}
     >
-      {text}
+      {isPending && isPending ? <LoadingSpinner /> : <span>{text}</span>}
     </button>
   );
 };
