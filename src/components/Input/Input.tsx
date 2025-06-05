@@ -1,5 +1,12 @@
 import type { InputHTMLAttributes } from "react";
 import { useRef } from "react";
+import { WithTitle, WithLabel, WithNumber, WithHelperText } from "./Custom";
+import {
+  type WithTitleProps,
+  type WithLabelProps,
+  type WithNumberProps,
+  type WithHelperTextProps,
+} from "./Custom";
 
 interface InputProps
   extends Omit<InputHTMLAttributes<HTMLInputElement>, "value"> {
@@ -43,4 +50,15 @@ const Input = ({
   );
 };
 
-export default Input;
+type InputType = React.FC<InputProps> & {
+  WithTitle: React.FC<WithTitleProps>;
+  WithLabel: React.FC<WithLabelProps>;
+  WithNumber: React.FC<WithNumberProps>;
+  WithHelperText: React.FC<WithHelperTextProps>;
+};
+Input.WithTitle = WithTitle;
+Input.WithLabel = WithLabel;
+Input.WithNumber = WithNumber;
+Input.WithHelperText = WithHelperText;
+
+export default Input as InputType;

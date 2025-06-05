@@ -19,6 +19,8 @@ export type IconType =
   | "Dots"
   | "Plus"
   | "Upload"
+  | "Link"
+  | "Key"
   | "CheckCircle"
   | "ClockCircle";
 

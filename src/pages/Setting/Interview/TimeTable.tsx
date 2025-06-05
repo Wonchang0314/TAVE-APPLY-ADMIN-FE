@@ -33,7 +33,10 @@ const TimeTable = () => {
     searchByName,
   } = useFilter();
   return (
-    <>
+    <div
+      className="flex flex-col gap-4"
+      onKeyDown={(e) => e.key === "Enter" && searchByName()}
+    >
       <FlexBox className="justify-between">
         <Button
           className="bg-white border-gray-300 text-gray-700! relative"
@@ -67,7 +70,7 @@ const TimeTable = () => {
         isLoading={isLoading}
         navigate={navigate}
       />
-    </>
+    </div>
   );
 };
 

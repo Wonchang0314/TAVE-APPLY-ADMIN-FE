@@ -17,3 +17,5 @@ export { default as Search } from "./search.svg?react";
 export { default as Plus } from "./tabler_plus.svg?react";
 export { default as Alert } from "./tabler_alert-triangle.svg?react";
 export { default as Upload } from "./tabler_arrow-bar-to-down.svg?react";
+export { default as Key } from "./key-two.svg?react";
+export { default as Link } from "./Link.svg?react";

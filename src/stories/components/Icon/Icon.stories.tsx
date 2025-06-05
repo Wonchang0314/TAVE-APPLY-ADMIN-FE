@@ -19,6 +19,8 @@ const meta = {
         "Left",
         "CheckCircle",
         "Upload",
+        "Key",
+        "Link",
         "X",
         "XCircle",
         "ChevronDown",

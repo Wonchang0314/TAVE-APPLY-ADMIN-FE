@@ -27,7 +27,7 @@ const Button = ({
       {isPending && isPending ? (
         <LoadingSpinner />
       ) : (
-        <FlexBox className="gap-2 justify-between">{children}</FlexBox>
+        <FlexBox className="gap-2 justify-center">{children}</FlexBox>
       )}
     </button>
   );
