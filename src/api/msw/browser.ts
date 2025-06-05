@@ -5,7 +5,7 @@ export const worker = setupWorker(...handlers);
 
 // worker 시작
 export const startMSW = async () => {
-  if (import.meta.env.VITE_STAGE === "development") {
+  if (process.env.NODE_ENV === "development") {
     await worker.start({
       onUnhandledRequest: "bypass", // MSW에서 처리되지 않는 요청은 그대로 통과
     });
