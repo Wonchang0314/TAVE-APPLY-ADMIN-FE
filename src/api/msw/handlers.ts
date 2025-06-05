@@ -4,6 +4,12 @@ import {
   settingHandler,
   postSettingDefault,
 } from "@/api/msw/Setting/defaultMock";
+import {
+  getAllInterviewers,
+  getSingleInterviewer,
+  postInterviewDate,
+  postFile,
+} from "./Setting/interviewMock";
 
 const genderData: ChartDataWithCount[] = [
   { label: "남성", ratio: 75, count: 34 },
@@ -48,4 +54,8 @@ export const handlers = [
   }),
   settingHandler,
   postSettingDefault,
+  getAllInterviewers,
+  getSingleInterviewer,
+  postInterviewDate,
+  postFile,
 ];

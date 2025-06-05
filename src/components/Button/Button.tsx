@@ -1,17 +1,18 @@
 import type { ButtonHTMLAttributes } from "react";
 import LoadingSpinner from "../LoadingSpinner";
+import FlexBox from "../Layout/FlexBox";
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  text: string;
   width?: string;
   isPending?: boolean;
+  children: React.ReactNode;
   className?: string;
 }
 
 const Button = ({
-  text,
   width,
   isPending,
+  children,
   className,
   disabled = false,
   onClick,
@@ -23,7 +24,11 @@ const Button = ({
       onKeyDown={(e) => e.key === "Enter" && onClick}
       disabled={disabled}
     >
-      {isPending && isPending ? <LoadingSpinner /> : <span>{text}</span>}
+      {isPending && isPending ? (
+        <LoadingSpinner />
+      ) : (
+        <FlexBox className="gap-2 justify-center">{children}</FlexBox>
+      )}
     </button>
   );
 };

@@ -2,7 +2,7 @@ import { useState } from "react";
 import FlexBox from "@/components/Layout/FlexBox";
 import CountCard from "@/components/Card/CountCard";
 import Tab from "@/components/Tab/Tab";
-import ApplicationTable from "@/components/ApplicationTable/ApplicationTable";
+// import ApplicationTable from "@/components/ApplicationTable/ApplicationTable";
 import SearchInput from "@/components/Input/SearchInput";
 
 // interface InputProps {
@@ -58,7 +58,7 @@ export const Page = () => {
           </div>
         </div>
 
-        <ApplicationTable filterStatus={activeTab} />
+        {/* <ApplicationTable filterStatus={activeTab} /> */}
       </section>
     </div>
   );
