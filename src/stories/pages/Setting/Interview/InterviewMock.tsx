@@ -7,8 +7,8 @@ import Tab from "@/components/Tab/Tab";
 import Body from "@/components/Layout/Body";
 import Modal from "@/components/Modal/Modal";
 import ToastMessage from "@/components/Modal/ToastMessage";
-import { DefaultMock } from "./Interview/DefaultMock";
-import { TimeTableMock } from "./Interview/TimeTableMock";
+import { DefaultMock } from "./DefaultMock";
+import { TimeTableMock } from "./TimeTableMock";
 
 const tabCategories = ["면접 시간표 등록", "기본 설정"];
 
@@ -54,9 +54,13 @@ const InterviewSettingMock = () => {
         setPostFileResult({ message: "파일이 성공적으로 업로드되었습니다." });
         setIsToastOpen(true);
         setIsPending(false);
-        if (dialogRef.current) {
-          dialogRef.current.close();
-        }
+      }, 1000);
+    } else {
+      setIsPending(true);
+      setTimeout(() => {
+        setPostFileResult({ message: "누락된 파일이 있습니다." });
+        setIsToastOpen(true);
+        setIsPending(false);
       }, 1000);
     }
   };
@@ -91,6 +95,7 @@ const InterviewSettingMock = () => {
           <ToastMessage
             message={postFileResult.message}
             isOpen={isToastOpen}
+            isError={postFileResult.message === "누락된 파일이 있습니다."}
             setIsOpen={setIsToastOpen}
           />
         )}

@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { MemoryRouter } from "react-router-dom";
-import InterviewSettingMock from "./InterviewMock";
+import InterviewSettingMock from "./Interview/InterviewMock";
 import { DetailMock } from "./Interview/DetailMock";
 
 const meta = {
