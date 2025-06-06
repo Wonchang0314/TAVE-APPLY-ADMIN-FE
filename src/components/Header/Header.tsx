@@ -49,7 +49,7 @@ const Header = ({ redirectionList }: HeaderProps) => {
                   {item}
                 </button>
                 {item === "SETTING" && (
-                  <ul className="absolute top-14 left-0 w-full bg-gray-800 text-gray-400 px-4 py-3 rounded-xl flex flex-col gap-3 text-center hidden group-hover:flex transition-all duration-200">
+                  <ul className="absolute z-99 top-14 left-0 w-full bg-gray-800 text-gray-400 px-4 py-3 rounded-xl flex flex-col gap-3 text-center hidden group-hover:flex transition-all duration-200">
                     <li
                       className="hover:text-white cursor-pointer"
                       onClick={() => navigate("/setting/default")}

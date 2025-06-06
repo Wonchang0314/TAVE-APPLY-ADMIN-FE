@@ -9,7 +9,6 @@ export const useFilter = () => {
     queryFn: fetchAllInterviewers,
   });
   const [filteredList, setFilteredList] = useState<Application[]>([]);
-  const [showFilter, setShowFilter] = useState(false);
   const [searchInput, setSearchInput] = useState("");
   const [checkedRoles, setCheckedRoles] = useState<Set<RoleType>>(new Set());
 
@@ -65,11 +64,9 @@ export const useFilter = () => {
   return {
     isLoading,
     filteredList,
-    showFilter,
     checkedRoles,
     searchInput,
     setSearchInput,
-    setShowFilter,
     handleFilter,
     searchByName,
   };

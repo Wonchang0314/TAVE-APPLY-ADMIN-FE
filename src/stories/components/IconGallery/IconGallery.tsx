@@ -5,6 +5,7 @@ type StandardIconType = Exclude<IconType, "TaveLogo">;
 
 const iconNames: StandardIconType[] = [
   "Trash",
+  "TextLength",
   "Dots",
   "Calendar",
   "Filter",
@@ -13,8 +14,10 @@ const iconNames: StandardIconType[] = [
   "Upload",
   "Key",
   "Link",
+  "Menu",
   "X",
   "XCircle",
+  "Pen",
   "ChevronDown",
   "ChevronUp",
   "Alert",
