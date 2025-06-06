@@ -1,7 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import FlexBox from "@/components/Layout/FlexBox";
 import Icon from "@/components/Icon/Icon";
-import Button from "@/components/Button/Button";
 import SearchInput from "@/components/Input/SearchInput";
 import ApplicationTable from "@/components/ApplicationTable/ApplicationTable";
 import type { RoleType } from "@/types/role";
@@ -24,11 +23,9 @@ const TimeTable = () => {
   const {
     filteredList,
     isLoading,
-    showFilter,
     checkedRoles,
     searchInput,
     setSearchInput,
-    setShowFilter,
     handleFilter,
     searchByName,
   } = useFilter();
@@ -38,15 +35,14 @@ const TimeTable = () => {
       onKeyDown={(e) => e.key === "Enter" && searchByName()}
     >
       <FlexBox className="justify-between">
-        <Button
-          className="bg-white border-gray-300 text-gray-700! relative"
-          onClick={() => setShowFilter(!showFilter)}
-        >
-          <Icon type="Filter" size={18} />
-          지원분야
-        </Button>
-        {showFilter && (
-          <div className="w-[222px] h-[296px] bg-white rounded-xl p-4 absolute bottom-35 border border-gray-100">
+        <details className="relative">
+          <summary className="flex items-center gap-2 px-4 py-3 rounded-lg bg-white text-gray-700 focus:outline outline-gray-300 font-medium cursor-pointer">
+            <Icon type="Filter" size={18} />
+            지원분야
+          </summary>
+          <div
+            className={`absolute top-full left-0 mt-2 px-4 py-3 bg-white border border-gray-300 rounded-lg min-w-48 z-10`}
+          >
             {filters.map((role) => (
               <CheckBox
                 key={role}
@@ -56,7 +52,7 @@ const TimeTable = () => {
               />
             ))}
           </div>
-        )}
+        </details>
         <SearchInput
           value={searchInput}
           onChange={(e) => setSearchInput(e.target.value)}

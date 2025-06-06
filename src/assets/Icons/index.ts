@@ -19,3 +19,6 @@ export { default as Alert } from "./tabler_alert-triangle.svg?react";
 export { default as Upload } from "./tabler_arrow-bar-to-down.svg?react";
 export { default as Key } from "./key-two.svg?react";
 export { default as Link } from "./Link.svg?react";
+export { default as Menu } from "./tabler_menu.svg?react";
+export { default as TextLength } from "./text-length.svg?react";
+export { default as Pen } from "./Pen.svg?react";
