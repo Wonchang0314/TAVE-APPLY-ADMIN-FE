@@ -1,5 +1,5 @@
 import type { Preview } from "@storybook/react";
-import { initialize, mswDecorator } from "msw-storybook-addon";
+import { initialize, mswLoader } from "msw-storybook-addon";
 import "../src/index.css";
 import {
   getCommonQuestions,
@@ -36,5 +36,6 @@ const preview: Preview = {
   },
 };
 
-export const decorators = [mswDecorator];
+export const loaders = [mswLoader];
+
 export default preview;
