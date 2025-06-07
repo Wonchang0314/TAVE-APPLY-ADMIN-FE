@@ -11,7 +11,15 @@ import {
   getDeepLearningQuestions,
 } from "./Setting/Document/documentMock";
 
-initialize();
+initialize({
+  onUnhandledRequest: "bypass",
+  serviceWorker: {
+    url:
+      process.env.NODE_ENV === "development"
+        ? "/mockServiceWorker.js"
+        : "./mockServiceWorker.js",
+  },
+});
 
 const preview: Preview = {
   parameters: {
