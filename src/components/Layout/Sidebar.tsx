@@ -1,13 +1,9 @@
 import Icon from "../Icon/Icon";
-import {
-  useEffect,
-  useRef,
-  useState,
-  type Dispatch,
-  type SetStateAction,
-} from "react";
+import { useEffect, useRef, useState } from "react";
 import FlexBox from "./FlexBox";
 import type { RoleType } from "@/types/role";
+import { fetchItems } from "@/api/Setting/Document";
+import useDocumentStore from "@/hooks/Setting/Document/useDocumentStore";
 
 export type SideBarLabel = "" | "공통 질문" | "파트별 질문" | RoleType;
 interface SidebarItem {
@@ -19,16 +15,14 @@ interface SidebarItem {
 interface SidebarProps {
   items: SidebarItem[];
   selectedItem: SideBarLabel;
-  onSectionClick: Dispatch<SetStateAction<SideBarLabel>>; // 공통 질문, 파트별 질문 등 큼지막한 탭을 클릭했을때 로직을 위한 props
-  onItemClick: (item: any) => void; // 직군별 질문을 패칭하는 로직과 같은 함수를 받기 위한 props
+  onSectionClick: (side: SideBarLabel) => void; // 공통 질문, 파트별 질문 등 큼지막한 탭을 클릭했을때 로직을 위한 props
   className?: string;
 }
 
 interface SidebarItemProps {
   item: SidebarItem;
   selectedItem: SideBarLabel;
-  onSectionClick: Dispatch<SetStateAction<SideBarLabel>>;
-  onItemClick: (item: any) => void;
+  onSectionClick: (side: SideBarLabel) => void;
 }
 
 const SidebarItems: SidebarItem[] = [
@@ -70,10 +64,11 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
   item,
   selectedItem,
   onSectionClick,
-  onItemClick,
 }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const contentRef = useRef<HTMLDivElement>(null);
+
+  const { setQuestions } = useDocumentStore();
 
   const handleToggle = () => {
     setIsOpen(!isOpen);
@@ -92,19 +87,9 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
     }
   }, [isOpen]);
 
-  const isSideBarLabel = (
-    label: RoleType | SideBarLabel
-  ): label is SideBarLabel => {
-    return label === "" || label === "공통 질문" || label === "파트별 질문";
-  };
-
-  const handleClick = (label: RoleType | SideBarLabel) => {
-    if (isSideBarLabel(label)) {
-      onSectionClick(label);
-    } else {
-      onSectionClick(label);
-      onItemClick(label);
-    }
+  const fetchNewItems = async (label: RoleType) => {
+    const data = await fetchItems(label);
+    setQuestions(data);
   };
 
   return (
@@ -148,7 +133,7 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
               {item.children?.map((child) => (
                 <span
                   key={child.label}
-                  onClick={() => handleClick(child.label)}
+                  onClick={() => fetchNewItems(child.label as RoleType)}
                   className={`block py-2 px-4 text-sm ${
                     selectedItem === child.label
                       ? "text-blue-700 font-bold"
@@ -182,7 +167,6 @@ const Sidebar: React.FC<SidebarProps> = ({
   items,
   selectedItem,
   onSectionClick,
-  onItemClick,
   className = "",
 }) => {
   return (
@@ -196,7 +180,6 @@ const Sidebar: React.FC<SidebarProps> = ({
             key={item.label}
             item={item}
             onSectionClick={onSectionClick}
-            onItemClick={onItemClick}
             selectedItem={selectedItem}
           />
         ))}

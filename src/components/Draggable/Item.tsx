@@ -1,26 +1,30 @@
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { useRef, useState } from "react";
+import { useRef, useState, useCallback } from "react";
 import FlexBox from "../Layout/FlexBox";
 import Icon from "@/components/Icon/Icon";
 import Switch from "../Input/Switch";
 
 interface DraggableItemProps {
   item: any;
-  startEditItem: (itemId: string) => void;
-  endEditItem: () => void;
-  deleteItem: (item: any) => void;
-  updateItem: (itemId: string, value: string) => void;
+  onStartEdit: (itemId: string) => void;
+  onEndEdit: () => void;
+  onEdit: (itemId: string, value: string) => void;
+  onDelete: (itemId: string) => void;
+  onToggleRequired: (itemId: string) => void;
 }
+
 const DraggableItem = ({
   item,
-  deleteItem,
-  startEditItem,
-  endEditItem,
-  updateItem,
+  onStartEdit,
+  onEndEdit,
+  onEdit,
+  onDelete,
+  onToggleRequired,
 }: DraggableItemProps) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const [inputValue, setInputValue] = useState(item.question);
+
   const {
     attributes,
     listeners,
@@ -34,26 +38,57 @@ const DraggableItem = ({
     transform: CSS.Transform.toString(transform),
     transition,
   };
-  const [isRequired, setIsRequired] = useState(item.required);
 
-  const handleFocus = () => {
+  const handleFocus = useCallback(() => {
     if (inputRef.current && item.mode === "default") {
-      startEditItem(item.id);
-      inputRef.current.focus();
-    } else endEditItem();
-  };
+      onStartEdit(item.id);
+      requestAnimationFrame(() => {
+        inputRef.current?.focus();
+      });
+    } else {
+      onEndEdit();
+    }
+  }, [item.id, item.mode, onStartEdit, onEndEdit]);
+
+  const handleEdit = useCallback(() => {
+    onEdit(item.id, inputValue);
+  }, [item.id, inputValue, onEdit]);
+
+  const handleDelete = useCallback(() => {
+    onDelete(item.id);
+  }, [item.id, onDelete]);
+
+  const handleToggleRequired = useCallback(() => {
+    onToggleRequired(item.id);
+  }, [item.id, onToggleRequired]);
+
+  const handleInputChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setInputValue(e.target.value);
+      e.target.style.width = `${e.target.value.length + 5}ch`;
+    },
+    []
+  );
+
+  const handleKeyDown = useCallback(
+    (e: React.KeyboardEvent) => {
+      if (e.key === "Enter") {
+        handleEdit();
+      }
+    },
+    [handleEdit]
+  );
 
   return (
     <li
-      onKeyDown={(e) => e.key === "Enter" && updateItem(item.id, inputValue)}
+      onKeyDown={handleKeyDown}
       className={`flex items-center w-full border border-gray-300 rounded-xl bg-white pr-4 justify-between hover:bg-gray-100 ${
         item.mode === "focused"
           ? "outline outline-blue-500 shadow-lg scale-103"
           : item.mode === "blurred"
           ? "opacity-50"
           : ""
-      }
-      `}
+      }`}
       ref={setNodeRef}
       style={style}
       {...attributes}
@@ -76,10 +111,7 @@ const DraggableItem = ({
           className={`text-gray-900 font-medium ${
             isDragging ? "cursor-grabbing" : ""
           }`}
-          onChange={(e) => {
-            setInputValue(e.target.value);
-            e.target.style.width = `${e.target.value.length + 5}ch`; // 텍스트 길이 + 여유
-          }}
+          onChange={handleInputChange}
           style={{ width: `${item.question.length + 5}ch` }}
         />
         {item.maxLength && (
@@ -90,27 +122,29 @@ const DraggableItem = ({
       <FlexBox className="gap-4">
         <Switch
           title="필수 질문"
-          isOn={isRequired}
-          setIsOn={() => setIsRequired(!isRequired)}
+          isOn={item.required}
+          setIsOn={handleToggleRequired}
         />
 
         <button
           className="p-2 border border-gray-300 rounded-lg hover:bg-blue-100 cursor-pointer"
-          onClick={() => handleFocus()}
+          onClick={handleFocus}
         >
           <Icon type="Pen" size={20} />
         </button>
+
         {item.maxLength && (
           <button
             className="p-2 border border-gray-300 rounded-lg hover:bg-blue-100 cursor-pointer"
-            onClick={() => deleteItem(item)}
+            onClick={handleDelete}
           >
             <Icon type="TextLength" size={20} />
           </button>
         )}
+
         <button
           className="p-2 border border-gray-300 rounded-lg hover:bg-blue-100 cursor-pointer"
-          onClick={() => deleteItem(item)}
+          onClick={handleDelete}
         >
           <Icon type="Trash" size={20} />
         </button>
