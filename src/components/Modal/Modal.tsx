@@ -89,8 +89,9 @@ const Modal = ({
         -translate-x-1/2
         -translate-y-1/2
         rounded-xl
-        backdrop:bg-black
-        backdrop:opacity-50
+        backdrop:bg-black!
+        backdrop:opacity-50!
+        backdrop-blur-xl
         focus:outline-none
       `}
       onClick={handleBackdropClick}

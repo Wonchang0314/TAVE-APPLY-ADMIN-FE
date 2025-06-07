@@ -1,13 +1,10 @@
 import Icon from "../Icon/Icon";
-import {
-  useEffect,
-  useRef,
-  useState,
-  type Dispatch,
-  type SetStateAction,
-} from "react";
+import { useEffect, useRef, useState } from "react";
 import FlexBox from "./FlexBox";
 import type { RoleType } from "@/types/role";
+import { fetchItems } from "@/api/Setting/Document";
+import useDocumentStore from "@/hooks/Setting/Document/useDocumentStore";
+import type { DocumentKey } from "@/types/document";
 
 export type SideBarLabel = "" | "공통 질문" | "파트별 질문" | RoleType;
 interface SidebarItem {
@@ -19,14 +16,14 @@ interface SidebarItem {
 interface SidebarProps {
   items: SidebarItem[];
   selectedItem: SideBarLabel;
-  onItemClick: Dispatch<SetStateAction<SideBarLabel>>;
+  onSectionClick: (side: SideBarLabel) => void; // 공통 질문, 파트별 질문 등 큼지막한 탭을 클릭했을때 로직을 위한 props
   className?: string;
 }
 
 interface SidebarItemProps {
   item: SidebarItem;
   selectedItem: SideBarLabel;
-  onItemClick: Dispatch<SetStateAction<SideBarLabel>>;
+  onSectionClick: (side: SideBarLabel) => void;
 }
 
 const SidebarItems: SidebarItem[] = [
@@ -67,14 +64,16 @@ const SidebarItems: SidebarItem[] = [
 const SidebarItem: React.FC<SidebarItemProps> = ({
   item,
   selectedItem,
-  onItemClick,
+  onSectionClick,
 }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const contentRef = useRef<HTMLDivElement>(null);
 
+  const { setQuestions } = useDocumentStore();
+
   const handleToggle = () => {
     setIsOpen(!isOpen);
-    onItemClick(item.label);
+    onSectionClick(item.label);
   };
 
   useEffect(() => {
@@ -88,6 +87,11 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
       }
     }
   }, [isOpen]);
+
+  const fetchNewItems = async (label: DocumentKey) => {
+    const data = await fetchItems(label);
+    setQuestions(data);
+  };
 
   return (
     <div className="w-full">
@@ -130,7 +134,10 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
               {item.children?.map((child) => (
                 <span
                   key={child.label}
-                  onClick={() => onItemClick(child.label)}
+                  onClick={() => {
+                    onSectionClick(child.label);
+                    fetchNewItems(child.label as DocumentKey);
+                  }}
                   className={`block py-2 px-4 text-sm ${
                     selectedItem === child.label
                       ? "text-blue-700 font-bold"
@@ -145,7 +152,10 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
         </FlexBox>
       ) : (
         <button
-          onClick={() => onItemClick(item.label)}
+          onClick={() => {
+            onSectionClick(item.label);
+            fetchNewItems(item.label as DocumentKey);
+          }}
           className={`w-full px-6 py-4 flex items-start cursor-pointer ${
             selectedItem === item.label
               ? "text-blue-700 font-bold"
@@ -163,7 +173,7 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
 const Sidebar: React.FC<SidebarProps> = ({
   items,
   selectedItem,
-  onItemClick,
+  onSectionClick,
   className = "",
 }) => {
   return (
@@ -176,7 +186,7 @@ const Sidebar: React.FC<SidebarProps> = ({
           <SidebarItem
             key={item.label}
             item={item}
-            onItemClick={onItemClick}
+            onSectionClick={onSectionClick}
             selectedItem={selectedItem}
           />
         ))}
