@@ -5,6 +5,9 @@ import FlexBox from "../Layout/FlexBox";
 import Icon from "@/components/Icon/Icon";
 import Switch from "../Input/Switch";
 
+import WordLimitModal from "@/pages/Setting/Document/WordLimitModal";
+import InterviewScheduleModal from "@/pages/Setting/Document/InterviewScheduleModal";
+
 interface DraggableItemProps {
   item: any;
   onStartEdit: (itemId: string) => void;
@@ -22,6 +25,8 @@ const DraggableItem = ({
   onDelete,
   onToggleRequired,
 }: DraggableItemProps) => {
+  const wordLimitModalRef = useRef<HTMLDialogElement>(null);
+  const interviewScheduleModal = useRef<HTMLDialogElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const [inputValue, setInputValue] = useState(item.question);
 
@@ -40,7 +45,7 @@ const DraggableItem = ({
   };
 
   const handleFocus = useCallback(() => {
-    if (inputRef.current && item.mode === "default") {
+    if (item.mode === "default") {
       onStartEdit(item.id);
       requestAnimationFrame(() => {
         inputRef.current?.focus();
@@ -128,7 +133,11 @@ const DraggableItem = ({
 
         <button
           className="p-2 border border-gray-300 rounded-lg hover:bg-blue-100 cursor-pointer"
-          onClick={handleFocus}
+          onClick={() => {
+            item.question === "가능한 오프라인 면접 시간"
+              ? interviewScheduleModal.current?.showModal()
+              : handleFocus();
+          }}
         >
           <Icon type="Pen" size={20} />
         </button>
@@ -136,7 +145,7 @@ const DraggableItem = ({
         {item.maxLength && (
           <button
             className="p-2 border border-gray-300 rounded-lg hover:bg-blue-100 cursor-pointer"
-            onClick={handleDelete}
+            onClick={() => wordLimitModalRef.current?.showModal()}
           >
             <Icon type="TextLength" size={20} />
           </button>
@@ -149,6 +158,8 @@ const DraggableItem = ({
           <Icon type="Trash" size={20} />
         </button>
       </FlexBox>
+      <WordLimitModal ref={wordLimitModalRef} />
+      <InterviewScheduleModal ref={interviewScheduleModal} />
     </li>
   );
 };

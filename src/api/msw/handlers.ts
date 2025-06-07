@@ -17,6 +17,7 @@ import {
   getDataAnalysisQuestions,
   getDeepLearningQuestions,
   getDesignQuestions,
+  getCommonQuestions,
 } from "./Setting/documentMock";
 
 const genderData: ChartDataWithCount[] = [
@@ -67,6 +68,7 @@ export const handlers = [
   postInterviewDate,
   postFile,
   // 여기부터 서류설정 관련
+  getCommonQuestions,
   getAppFrontQuestions,
   getWebFrontQuestions,
   getBackendQuestions,

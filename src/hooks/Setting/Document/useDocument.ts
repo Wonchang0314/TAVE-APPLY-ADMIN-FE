@@ -22,6 +22,7 @@ const useDocument = () => {
     const newQuestion = {
       id: questions.length + 1,
       question: "",
+      maxLength: 100,
       required: false,
     };
     const temp = [...questions, newQuestion];

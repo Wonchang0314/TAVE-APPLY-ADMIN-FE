@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
 import FlexBox from "@/components/Layout/FlexBox";
 import Body from "@/components/Layout/Body";
 import Tab from "@/components/Tab/Tab";
@@ -9,10 +9,7 @@ import {
 } from "@/components/Layout/Sidebar";
 import DraggableList from "@/components/Draggable/List";
 
-import WordLimitModal from "./Document/WordLimitModal";
-
 const DocumentSetting = () => {
-  const wordLimitRef = useRef<HTMLDialogElement>(null);
   const [selectedTab, setSelectedTab] = useState("지원서 질문");
   const [selectedSide, setSelectedSide] = useState<SideBarLabel>("");
 
@@ -36,7 +33,6 @@ const DocumentSetting = () => {
           />
           <DraggableList />
         </div>
-        <WordLimitModal ref={wordLimitRef} />
       </Body>
     </div>
   );

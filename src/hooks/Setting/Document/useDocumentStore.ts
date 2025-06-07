@@ -2,6 +2,8 @@ import { create } from "zustand";
 
 interface DocumentStates {
   questions: any[];
+  wordLimitModalRef: HTMLDialogElement | null;
+  interviewSceduleModalRef: HTMLDialogElement | null;
 }
 
 interface DocumentActions {
@@ -13,6 +15,8 @@ type DocumentStore = DocumentStates & DocumentActions;
 
 const initialState: DocumentStates = {
   questions: [],
+  wordLimitModalRef: null,
+  interviewSceduleModalRef: null,
 };
 const useDocumentStore = create<DocumentStore>((set) => ({
   ...initialState,

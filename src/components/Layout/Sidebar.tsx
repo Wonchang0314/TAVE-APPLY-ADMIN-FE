@@ -4,6 +4,7 @@ import FlexBox from "./FlexBox";
 import type { RoleType } from "@/types/role";
 import { fetchItems } from "@/api/Setting/Document";
 import useDocumentStore from "@/hooks/Setting/Document/useDocumentStore";
+import type { DocumentKey } from "@/types/document";
 
 export type SideBarLabel = "" | "공통 질문" | "파트별 질문" | RoleType;
 interface SidebarItem {
@@ -87,7 +88,7 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
     }
   }, [isOpen]);
 
-  const fetchNewItems = async (label: RoleType) => {
+  const fetchNewItems = async (label: DocumentKey) => {
     const data = await fetchItems(label);
     setQuestions(data);
   };
@@ -133,7 +134,10 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
               {item.children?.map((child) => (
                 <span
                   key={child.label}
-                  onClick={() => fetchNewItems(child.label as RoleType)}
+                  onClick={() => {
+                    onSectionClick(child.label);
+                    fetchNewItems(child.label as DocumentKey);
+                  }}
                   className={`block py-2 px-4 text-sm ${
                     selectedItem === child.label
                       ? "text-blue-700 font-bold"
@@ -148,7 +152,10 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
         </FlexBox>
       ) : (
         <button
-          onClick={() => onSectionClick(item.label)}
+          onClick={() => {
+            onSectionClick(item.label);
+            fetchNewItems(item.label as DocumentKey);
+          }}
           className={`w-full px-6 py-4 flex items-start cursor-pointer ${
             selectedItem === item.label
               ? "text-blue-700 font-bold"

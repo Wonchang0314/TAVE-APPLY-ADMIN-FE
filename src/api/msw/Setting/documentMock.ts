@@ -6,9 +6,13 @@ import {
   backendQuestions,
   dataAnalysisQuestions,
   deepLearningQuestions,
+  commonQuestions,
 } from "./documentData";
 
 // API 핸들러들
+const getCommonQuestions = http.get("/api/setting/document/common", () => {
+  return HttpResponse.json(commonQuestions, { status: 200 });
+});
 const getDesignQuestions = http.get("/api/setting/document/design", () => {
   return HttpResponse.json(designQuestions, { status: 200 });
 });
@@ -40,16 +44,11 @@ const getDeepLearningQuestions = http.get(
 );
 
 export {
+  getCommonQuestions,
   getDesignQuestions,
   getWebFrontQuestions,
   getAppFrontQuestions,
   getBackendQuestions,
   getDataAnalysisQuestions,
   getDeepLearningQuestions,
-  designQuestions,
-  webFrontQuestions,
-  appFrontQuestions,
-  backendQuestions,
-  dataAnalysisQuestions,
-  deepLearningQuestions,
 };
