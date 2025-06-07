@@ -4,7 +4,7 @@ import { DocumentSetting } from "@/pages/Setting";
 import { SettingDefaultMock } from "./SettingDefaultMock";
 
 const meta = {
-  title: "Pages/Setting/Document",
+  title: "Pages/설정/서류 설정",
   component: DocumentSetting,
   parameters: {
     layout: "fullscreen",
@@ -21,4 +21,6 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const 서류설정: Story = {};
+export const 서류설정: Story = {
+  name: "서류 설정",
+};
