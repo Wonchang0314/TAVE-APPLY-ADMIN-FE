@@ -9,20 +9,59 @@ import {
 } from "@/components/Layout/Sidebar";
 import DraggableList from "@/components/Draggable/List";
 import { axiosInstance } from "@/api/axiosInstance";
+import type { RoleType } from "@/types/role";
 
+type DocumentType =
+  | "design"
+  | "web-front"
+  | "app-front"
+  | "backend"
+  | "data-analysis"
+  | "deep-learning";
+
+const documentMap: Record<RoleType, DocumentType> = {
+  "앱 프론트": "app-front",
+  "웹 프론트": "web-front",
+  백엔드: "backend",
+  디자인: "design",
+  "데이터 분석": "data-analysis",
+  딥러닝: "deep-learning",
+};
 const DocumentSetting = () => {
   const [selectedTab, setSelectedTab] = useState("지원서 질문");
   const [selectedSide, setSelectedSide] = useState<SideBarLabel>("");
   const [questions, setQuestions] = useState<any[]>([]);
 
-  const fetchItems = async () => {
+  const fetchItems = async (roleType: RoleType) => {
     try {
-      const res = await axiosInstance.get(`/api/setting/document`);
+      const res = await axiosInstance.get(
+        `/api/setting/document/${documentMap[roleType]}`
+      );
       return res.data;
     } catch (error) {
       return error;
     }
   };
+
+  const fetchNewItems = async (roleType: RoleType) => {
+    const items = await fetchItems(roleType);
+    const editableItems = items.map((item: any) => {
+      return { ...item, mode: "default" };
+    });
+    setQuestions(editableItems);
+    setSelectedSide(items);
+  };
+
+  useEffect(() => {
+    const fetcher = async () => {
+      const items = await fetchItems("백엔드");
+      const editableItems = items.map((item: any) => {
+        return { ...item, mode: "default" };
+      });
+      setQuestions(editableItems);
+    };
+    fetcher();
+  }, []);
 
   const addNewQuestion = () => {
     const newQuestion = {
@@ -38,17 +77,6 @@ const DocumentSetting = () => {
     const temp = questions.filter((question) => question.id !== item.id);
     setQuestions(temp);
   };
-
-  useEffect(() => {
-    const fetcher = async () => {
-      const items = await fetchItems();
-      const editableItems = items.map((item: any) => {
-        return { ...item, mode: "default" };
-      });
-      setQuestions(editableItems);
-    };
-    fetcher();
-  }, []);
 
   const startEditQuestion = useCallback((itemId: string) => {
     setQuestions((prev) =>
@@ -84,7 +112,8 @@ const DocumentSetting = () => {
           <Sidebar
             items={SidebarItems}
             selectedItem={selectedSide}
-            onItemClick={setSelectedSide}
+            onSectionClick={setSelectedSide}
+            onItemClick={fetchNewItems}
           />
           <DraggableList
             items={questions}

@@ -10,7 +10,14 @@ import {
   postInterviewDate,
   postFile,
 } from "./Setting/interviewMock";
-import { getQuestions } from "./Setting/documentMock";
+import {
+  getAppFrontQuestions,
+  getWebFrontQuestions,
+  getBackendQuestions,
+  getDataAnalysisQuestions,
+  getDeepLearningQuestions,
+  getDesignQuestions,
+} from "./Setting/documentMock";
 
 const genderData: ChartDataWithCount[] = [
   { label: "남성", ratio: 75, count: 34 },
@@ -60,5 +67,10 @@ export const handlers = [
   postInterviewDate,
   postFile,
   // 여기부터 서류설정 관련
-  getQuestions,
+  getAppFrontQuestions,
+  getWebFrontQuestions,
+  getBackendQuestions,
+  getDataAnalysisQuestions,
+  getDeepLearningQuestions,
+  getDesignQuestions,
 ];

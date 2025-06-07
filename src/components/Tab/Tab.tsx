@@ -16,6 +16,7 @@ const Tab = ({
   centerType = false,
 }: InputProps) => {
   const current = active ?? categories[0];
+  console.log("카테고리: " + categories, "현재: " + current);
   return (
     <div
       className={`relative flex flex-row gap-6  leading-[135%] tracking-[-0.56px] border-b border-[#E5E7EB]

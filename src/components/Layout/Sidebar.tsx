@@ -19,14 +19,16 @@ interface SidebarItem {
 interface SidebarProps {
   items: SidebarItem[];
   selectedItem: SideBarLabel;
-  onItemClick: Dispatch<SetStateAction<SideBarLabel>>;
+  onSectionClick: Dispatch<SetStateAction<SideBarLabel>>; // 공통 질문, 파트별 질문 등 큼지막한 탭을 클릭했을때 로직을 위한 props
+  onItemClick: (item: any) => void; // 직군별 질문을 패칭하는 로직과 같은 함수를 받기 위한 props
   className?: string;
 }
 
 interface SidebarItemProps {
   item: SidebarItem;
   selectedItem: SideBarLabel;
-  onItemClick: Dispatch<SetStateAction<SideBarLabel>>;
+  onSectionClick: Dispatch<SetStateAction<SideBarLabel>>;
+  onItemClick: (item: any) => void;
 }
 
 const SidebarItems: SidebarItem[] = [
@@ -67,6 +69,7 @@ const SidebarItems: SidebarItem[] = [
 const SidebarItem: React.FC<SidebarItemProps> = ({
   item,
   selectedItem,
+  onSectionClick,
   onItemClick,
 }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -74,7 +77,7 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
 
   const handleToggle = () => {
     setIsOpen(!isOpen);
-    onItemClick(item.label);
+    onSectionClick(item.label);
   };
 
   useEffect(() => {
@@ -88,6 +91,21 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
       }
     }
   }, [isOpen]);
+
+  const isSideBarLabel = (
+    label: RoleType | SideBarLabel
+  ): label is SideBarLabel => {
+    return label === "" || label === "공통 질문" || label === "파트별 질문";
+  };
+
+  const handleClick = (label: RoleType | SideBarLabel) => {
+    if (isSideBarLabel(label)) {
+      onSectionClick(label);
+    } else {
+      onSectionClick(label);
+      onItemClick(label);
+    }
+  };
 
   return (
     <div className="w-full">
@@ -130,7 +148,7 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
               {item.children?.map((child) => (
                 <span
                   key={child.label}
-                  onClick={() => onItemClick(child.label)}
+                  onClick={() => handleClick(child.label)}
                   className={`block py-2 px-4 text-sm ${
                     selectedItem === child.label
                       ? "text-blue-700 font-bold"
@@ -145,7 +163,7 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
         </FlexBox>
       ) : (
         <button
-          onClick={() => onItemClick(item.label)}
+          onClick={() => onSectionClick(item.label)}
           className={`w-full px-6 py-4 flex items-start cursor-pointer ${
             selectedItem === item.label
               ? "text-blue-700 font-bold"
@@ -163,6 +181,7 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
 const Sidebar: React.FC<SidebarProps> = ({
   items,
   selectedItem,
+  onSectionClick,
   onItemClick,
   className = "",
 }) => {
@@ -176,6 +195,7 @@ const Sidebar: React.FC<SidebarProps> = ({
           <SidebarItem
             key={item.label}
             item={item}
+            onSectionClick={onSectionClick}
             onItemClick={onItemClick}
             selectedItem={selectedItem}
           />
