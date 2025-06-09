@@ -10,6 +10,11 @@ import {
   getDataAnalysisQuestions,
   getDeepLearningQuestions,
 } from "./Setting/Document/documentMock";
+import {
+  getNotificationList,
+  postReservation,
+  postIndividualReservation,
+} from "./ApplyList/Notification";
 
 initialize({
   onUnhandledRequest: "bypass",
@@ -33,6 +38,10 @@ const preview: Preview = {
         getBackendQuestions,
         getDataAnalysisQuestions,
         getDeepLearningQuestions,
+        // 알림 신청 명단 페이지 관련
+        getNotificationList,
+        postReservation,
+        postIndividualReservation,
       ],
     },
     controls: {

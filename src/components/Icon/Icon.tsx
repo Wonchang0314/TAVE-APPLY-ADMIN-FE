@@ -24,6 +24,7 @@ export type IconType =
   | "Upload"
   | "Link"
   | "Key"
+  | "Email"
   | "CheckCircle"
   | "ClockCircle";
 

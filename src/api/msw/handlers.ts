@@ -19,6 +19,11 @@ import {
   getDesignQuestions,
   getCommonQuestions,
 } from "./Setting/documentMock";
+import {
+  getNotificationList,
+  postReservation,
+  postIndividualReservation,
+} from "./ApplyList/notification";
 
 const genderData: ChartDataWithCount[] = [
   { label: "남성", ratio: 75, count: 34 },
@@ -67,6 +72,10 @@ export const handlers = [
   getSingleInterviewer,
   postInterviewDate,
   postFile,
+  // ApplyList 관련
+  getNotificationList,
+  postReservation,
+  postIndividualReservation,
   // 여기부터 서류설정 관련
   getCommonQuestions,
   getAppFrontQuestions,
