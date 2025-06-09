@@ -31,6 +31,7 @@ const meta = {
         "Arrow",
         "File",
         "Plus",
+        "Email",
         "HelperCircle",
         "ClockCircle",
         "Alert",

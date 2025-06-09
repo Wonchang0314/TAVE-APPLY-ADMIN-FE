@@ -23,6 +23,7 @@ const iconNames: StandardIconType[] = [
   "Alert",
   "Arrow",
   "File",
+  "Email",
   "HelperCircle",
   "Plus",
   "ClockCircle",

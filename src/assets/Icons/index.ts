@@ -22,3 +22,4 @@ export { default as Link } from "./Link.svg?react";
 export { default as Menu } from "./tabler_menu.svg?react";
 export { default as TextLength } from "./text-length.svg?react";
 export { default as Pen } from "./Pen.svg?react";
+export { default as Email } from "./email.svg?react";
