@@ -7,7 +7,7 @@ const useDocument = () => {
 
   useEffect(() => {
     const initializeData = async () => {
-      const items = await fetchItems("백엔드");
+      const items = await fetchItems("공통 질문");
       const editableItems = items.map((item: any) => ({
         ...item,
         mode: "default",

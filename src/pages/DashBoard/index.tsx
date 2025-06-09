@@ -87,6 +87,7 @@ export const Page = () => {
         </FlexBox>
         <Modal
           dialogRef={dialogRef}
+          defaultOpen={true}
           title="신규 지원 초기 설정"
           buttonCount={1}
           confirmText="설정하러 가기"

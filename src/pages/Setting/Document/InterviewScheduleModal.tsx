@@ -5,6 +5,8 @@ import Modal from "@/components/Modal/Modal";
 import Input from "@/components/Input/Input";
 import Icon from "@/components/Icon/Icon";
 
+import ToastMessage from "@/components/Modal/ToastMessage";
+
 const options = ["15분", "20분", "25분", "30분"];
 
 const InterviewScheduleModal = ({
@@ -18,13 +20,25 @@ const InterviewScheduleModal = ({
   const [selected, setSelected] = useState("15분");
   const [open, setOpen] = useState(false);
 
+  const [isLoading, setIsLoading] = useState(false);
+  const [isToastOpen, setIsToastOpen] = useState(false);
+
+  const updateInterviewSchedule = () => {
+    setIsLoading(true);
+    setTimeout(() => {
+      setIsToastOpen(true);
+      setIsLoading(false);
+    }, 1000);
+  };
+
   return (
     <Modal
       dialogRef={ref}
       title="면접 시간 설정"
       buttonCount={2}
       confirmText="등록"
-      onConfirm={() => {}}
+      isPending={isLoading}
+      onConfirm={updateInterviewSchedule}
       width=""
     >
       <FlexBox direction="col" className="p-2 gap-4">
@@ -125,6 +139,11 @@ const InterviewScheduleModal = ({
           </FlexBox>
         </div>
       </FlexBox>
+      <ToastMessage
+        message="면접 시간을 변경하셨습니다"
+        isOpen={isToastOpen}
+        setIsOpen={setIsToastOpen}
+      />
     </Modal>
   );
 };

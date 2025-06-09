@@ -126,7 +126,7 @@ export const DashBoardMock = () => {
         </FlexBox>
         <Modal
           dialogRef={dialogRef}
-          defaultOpen
+          defaultOpen={true}
           title="신규 지원 초기 설정"
           buttonCount={1}
           confirmText="설정하러 가기"
