@@ -2,13 +2,13 @@ import { axiosInstance } from "../axiosInstance";
 import type { DocumentKey, DocumentType } from "@/types/document";
 
 const documentMap: Record<DocumentKey, DocumentType> = {
-  "공통 질문": "common",
-  "앱 프론트": "app-front",
-  "웹 프론트": "web-front",
-  백엔드: "backend",
-  디자인: "design",
-  "데이터 분석": "data-analysis",
-  딥러닝: "deep-learning",
+  "공통 질문": "COMMON",
+  "앱 프론트": "APPFRONTEND",
+  "웹 프론트": "WEBFRONTEND",
+  백엔드: "BACKEND",
+  디자인: "DESIGN",
+  "데이터 분석": "DATAANALYSIS",
+  딥러닝: "DEEPLEARNING",
 };
 
 export const fetchItems = async (roleType: DocumentKey) => {

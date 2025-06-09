@@ -67,6 +67,12 @@ export const designQuestions = [
 // 웹 프론트엔드 분야
 export const webFrontQuestions = [
   {
+    id: "wf0",
+    question: "홍길동님의 프로그래밍 실력은 어느 정도 인가요?",
+    chips: ["Javascript", "Typescript", "React.js", "Vue.js"],
+    required: true,
+  },
+  {
     id: "wf1",
     question:
       "웹 프론트엔드 분야 지원 동기와 TAVE 웹팀 활동을 통해 얻고 싶은 것을 적어주세요.",
@@ -102,6 +108,12 @@ export const webFrontQuestions = [
 
 // 앱 프론트엔드 분야
 export const appFrontQuestions = [
+  {
+    id: "af0",
+    question: "홍길동님의 프로그래밍 실력은 어느 정도 인가요?",
+    chips: ["Flutter", "React Native", "Swift-UI", "Kotlin"],
+    required: true,
+  },
   {
     id: "af1",
     question:
@@ -139,6 +151,12 @@ export const appFrontQuestions = [
 
 // 백엔드 분야
 export const backendQuestions = [
+  {
+    id: "be0",
+    question: "홍길동님의 프로그래밍 실력은 어느 정도 인가요?",
+    chips: ["Java", "Python", "Java spring", "Kotlin"],
+    required: true,
+  },
   {
     id: "be1",
     question:

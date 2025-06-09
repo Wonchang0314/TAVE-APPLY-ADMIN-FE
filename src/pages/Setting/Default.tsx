@@ -166,7 +166,7 @@ const DefaultSetting = () => {
             </Input.WithHelperText>
           </Input.WithNumber>
         </FlexBox>
-        <div className="w-[100px] mx-auto my-12">
+        <div className="w-[100px] mx-auto mt-12 mb-[300px]">
           <Button
             isPending={isPending}
             disabled={isPending}

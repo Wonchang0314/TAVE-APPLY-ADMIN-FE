@@ -4,6 +4,7 @@ import { useRef, useState, useCallback } from "react";
 import FlexBox from "../Layout/FlexBox";
 import Icon from "@/components/Icon/Icon";
 import Switch from "../Input/Switch";
+import ChipController from "@/pages/Setting/Document/ChipController";
 
 import WordLimitModal from "@/pages/Setting/Document/WordLimitModal";
 import InterviewScheduleModal from "@/pages/Setting/Document/InterviewScheduleModal";
@@ -87,7 +88,7 @@ const DraggableItem = ({
   return (
     <li
       onKeyDown={handleKeyDown}
-      className={`flex items-center w-full border border-gray-300 rounded-xl bg-white pr-4 justify-between hover:bg-gray-100 ${
+      className={`flex flex-col justify-between w-full border border-gray-300 rounded-xl bg-white pr-4 justify-between hover:bg-gray-100 ${
         item.mode === "focused"
           ? "outline outline-blue-500 shadow-lg scale-103"
           : item.mode === "blurred"
@@ -98,68 +99,79 @@ const DraggableItem = ({
       style={style}
       {...attributes}
     >
-      <div
-        className={`flex items-center rounded-lg p-4 ${
-          !isDragging && "hover:outline-2 hover:outline-blue-500"
-        } ${
-          isDragging
-            ? "cursor-grabbing outline-2 outline-blue-500"
-            : "cursor-pointer"
-        }`}
-        {...listeners}
-      >
-        <Icon type="Menu" size={20} className="mr-2" />
-        <input
-          ref={inputRef}
-          readOnly={item.mode !== "focused"}
-          value={inputValue}
-          className={`text-gray-900 font-medium ${
-            isDragging ? "cursor-grabbing" : ""
+      <div className="flex items-center justify-between">
+        <div
+          className={`flex items-center rounded-lg p-4 ${
+            !isDragging && "hover:outline-2 hover:outline-blue-500"
+          } ${
+            isDragging
+              ? "cursor-grabbing outline-2 outline-blue-500"
+              : "cursor-pointer"
           }`}
-          onChange={handleInputChange}
-          style={{ width: `${item.question.length + 5}ch` }}
-        />
-        {item.maxLength && (
-          <p className="text-gray-500 text-sm">{`(${item.maxLength}자 이내)`}</p>
-        )}
-      </div>
-
-      <FlexBox className="gap-4">
-        <Switch
-          title="필수 질문"
-          isOn={item.required}
-          setIsOn={handleToggleRequired}
-        />
-
-        <button
-          className="p-2 border border-gray-300 rounded-lg hover:bg-blue-100 cursor-pointer"
-          onClick={() => {
-            item.question === "가능한 오프라인 면접 시간"
-              ? interviewScheduleModal.current?.showModal()
-              : handleFocus();
-          }}
+          {...listeners}
         >
-          <Icon type="Pen" size={20} />
-        </button>
+          <Icon type="Menu" size={20} className="mr-2" />
+          <input
+            ref={inputRef}
+            readOnly={item.mode !== "focused"}
+            value={inputValue}
+            className={`text-gray-900 font-medium ${
+              isDragging ? "cursor-grabbing" : ""
+            }`}
+            onChange={handleInputChange}
+            style={{ width: `${item.question.length + 5}ch` }}
+          />
+          {item.maxLength && (
+            <p className="text-gray-500 text-sm">{`(${item.maxLength}자 이내)`}</p>
+          )}
+        </div>
 
-        {item.maxLength && (
+        <FlexBox className="gap-4">
+          <Switch
+            title="필수 질문"
+            isOn={item.required}
+            setIsOn={handleToggleRequired}
+          />
+
           <button
             className="p-2 border border-gray-300 rounded-lg hover:bg-blue-100 cursor-pointer"
-            onClick={() => wordLimitModalRef.current?.showModal()}
+            onClick={() => {
+              item.question === "가능한 오프라인 면접 시간"
+                ? interviewScheduleModal.current?.showModal()
+                : handleFocus();
+            }}
           >
-            <Icon type="TextLength" size={20} />
+            <Icon type="Pen" size={20} />
           </button>
-        )}
 
-        <button
-          className="p-2 border border-gray-300 rounded-lg hover:bg-blue-100 cursor-pointer"
-          onClick={handleDelete}
-        >
-          <Icon type="Trash" size={20} />
-        </button>
-      </FlexBox>
-      <WordLimitModal ref={wordLimitModalRef} />
-      <InterviewScheduleModal ref={interviewScheduleModal} />
+          {item.maxLength && (
+            <button
+              className="p-2 border border-gray-300 rounded-lg hover:bg-blue-100 cursor-pointer"
+              onClick={() => wordLimitModalRef.current?.showModal()}
+            >
+              <Icon type="TextLength" size={20} />
+            </button>
+          )}
+
+          <button
+            className="p-2 border border-gray-300 rounded-lg hover:bg-blue-100 cursor-pointer"
+            onClick={handleDelete}
+          >
+            <Icon type="Trash" size={20} />
+          </button>
+        </FlexBox>
+        <WordLimitModal ref={wordLimitModalRef} />
+        <InterviewScheduleModal ref={interviewScheduleModal} />
+      </div>
+      {item.question === "홍길동님의 프로그래밍 실력은 어느 정도 인가요?" &&
+        item.chips && (
+          <div className="px-4 pt-2 pb-4">
+            <ChipController
+              chips={item.chips}
+              focused={item.mode === "focused"}
+            />
+          </div>
+        )}
     </li>
   );
 };

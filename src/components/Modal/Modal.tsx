@@ -1,4 +1,4 @@
-import { type ReactNode, useEffect, type DialogHTMLAttributes } from "react";
+import { type ReactNode, type DialogHTMLAttributes, useEffect } from "react";
 import { Icon } from "@/components/Icon/Icon";
 import Button from "@/components/Button/Button";
 
@@ -11,8 +11,8 @@ interface ModalProps extends DialogHTMLAttributes<HTMLDialogElement> {
   confirmText?: string;
   onConfirm?: () => void;
   cancelText?: string;
-  width?: string;
   defaultOpen?: boolean;
+  width?: string;
   isPending?: boolean;
 }
 
@@ -24,59 +24,19 @@ const Modal = ({
   confirmText = "확인",
   onConfirm,
   cancelText = "취소",
-  width = "w-[480px]",
   defaultOpen = false,
+  width = "w-[480px]",
   isPending = false,
 }: ModalProps) => {
   useEffect(() => {
     const dialog = dialogRef.current;
     if (!dialog) return;
-
-    // ESC 키 이벤트 처리
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") {
-        dialog.close();
-      }
-    };
-
-    // dialog가 닫힐 때 onClose 호출
-    const handleClose = () => {
-      if (!dialog.open) {
-        document.body.style.overflow = "unset";
-        dialog.close();
-      }
-    };
-
-    dialog.addEventListener("close", handleClose);
-    dialog.addEventListener("keydown", handleKeyDown);
-
     // 초기 상태 설정
-    if (defaultOpen) {
+    if (defaultOpen && dialog) {
       dialog.showModal();
       document.body.style.overflow = "hidden";
     }
-
-    return () => {
-      dialog.removeEventListener("close", handleClose);
-      dialog.removeEventListener("keydown", handleKeyDown);
-      document.body.style.overflow = "unset";
-    };
   }, []);
-
-  // 배경 클릭 시 닫기
-  const handleBackdropClick = (e: React.MouseEvent) => {
-    const dialogDimensions = dialogRef.current?.getBoundingClientRect();
-    if (!dialogDimensions) return;
-
-    if (
-      e.clientX < dialogDimensions.left ||
-      e.clientX > dialogDimensions.right ||
-      e.clientY < dialogDimensions.top ||
-      e.clientY > dialogDimensions.bottom
-    ) {
-      dialogRef.current?.close();
-    }
-  };
 
   return (
     <dialog
@@ -94,7 +54,12 @@ const Modal = ({
         backdrop-blur-xl
         focus:outline-none
       `}
-      onClick={handleBackdropClick}
+      onMouseDown={(e) => {
+        // dialog 영역이 아닌 바깥(= backdrop)만 닫히도록 설정
+        if (e.target === e.currentTarget) {
+          dialogRef.current?.close();
+        }
+      }}
     >
       {/* Header */}
       <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200">

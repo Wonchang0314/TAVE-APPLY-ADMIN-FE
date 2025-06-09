@@ -1,5 +1,4 @@
-import type { InputHTMLAttributes } from "react";
-import { useRef } from "react";
+import { type InputHTMLAttributes } from "react";
 import { WithTitle, WithLabel, WithNumber, WithHelperText } from "./Custom";
 import {
   type WithTitleProps,
@@ -30,13 +29,10 @@ const Input = ({
   allowFile = false,
   ...rest
 }: InputProps) => {
-  const inputRef = useRef<HTMLInputElement | null>(null);
-
   const isFileInput = allowFile || type === "file";
 
   return (
     <input
-      ref={inputRef}
       type={isFileInput ? "file" : type}
       value={isFileInput ? undefined : value} // file input은 value 제어 불가
       onChange={onChange}

@@ -11,7 +11,7 @@ import DraggableList from "@/components/Draggable/List";
 
 const DocumentSetting = () => {
   const [selectedTab, setSelectedTab] = useState("지원서 질문");
-  const [selectedSide, setSelectedSide] = useState<SideBarLabel>("");
+  const [selectedSide, setSelectedSide] = useState<SideBarLabel>("공통 질문");
 
   return (
     <div className="text-white">

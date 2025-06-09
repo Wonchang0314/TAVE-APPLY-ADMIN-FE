@@ -1,13 +1,13 @@
 import { RoleType } from "./role";
 
 type DocumentType =
-  | "common"
-  | "design"
-  | "web-front"
-  | "app-front"
-  | "backend"
-  | "data-analysis"
-  | "deep-learning";
+  | "COMMON"
+  | "DESIGN"
+  | "WEBFRONTEND"
+  | "APPFRONTEND"
+  | "BACKEND"
+  | "DATAANALYSIS"
+  | "DEEPLEARNING";
 
 type DocumentKey = RoleType | "공통 질문";
 
