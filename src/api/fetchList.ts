@@ -16,10 +16,11 @@ export const fetchList = async (
 
     switch (type) {
       case "알림 신청":
-        url = "/v1/admin/interview";
+        url = "/v1/admin/notification";
         break;
       case "지원서":
-        url = "/v1/admin/alarm";
+        // 아직 구현안함
+        url = "/v1/admin/apply";
         break;
       case "면접 설정":
         url = "/v1/admin/interview";
@@ -28,8 +29,8 @@ export const fetchList = async (
         url = "/v1/manager/resume/evaluate";
         params.status = status;
         break;
-
       case "최종 서류 평가":
+        // 아직 구현안함
         url = "/v1/manager/resume/evaluate/final";
         params.status = status;
         break;
